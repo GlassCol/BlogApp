@@ -26,4 +26,5 @@ public class PostService implements IPostService {
     public Post getOneBy(Long theId) {
         return postDao.findById(theId).orElse(null);
     }
+
 }
