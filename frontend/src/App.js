@@ -1,15 +1,11 @@
-import { Header } from "./components/header/Header";
-import { SidePanel } from "./components/panels/SidePanel";
+import PostsAndReplies from "./pages/postsAndReplies";
 
 
 function App() {
   return (
     <div className="App">
       
-      {/* <header className="App-header"> </header> */}
-      <Header />
-      <SidePanel />
-
+      <PostsAndReplies />
     </div>
   );
 }
