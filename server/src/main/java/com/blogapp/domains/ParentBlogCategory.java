@@ -27,7 +27,7 @@ public class ParentBlogCategory {
     @Column
     private String label;
 
-    @Column
+    @Column(name = "is_primary")
     private boolean isPrimary;
 
     @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

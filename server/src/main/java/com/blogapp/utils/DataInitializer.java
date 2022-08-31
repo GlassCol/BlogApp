@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 @Component
 public class DataInitializer {
@@ -25,28 +26,59 @@ public class DataInitializer {
         this.appContextUtil = appContextUtil;
     }
 
-    public void seedBlogCategories() {
 
-        for (int i = 1; i < 6; i++) {
+    public void seedBlogCategories() {
+        String[] primaryCat = new String[]{" ", "Fitness", "Game", "Technology", "Sport", "Television", "Movie",
+        "Anime", "Travel", "Food & Drink", "Bar", "Club", "Science", "Parade", "Festival", "Casino", "Music",
+        "Wine", "Date", "Spiritual", "Auto", "Home" };
+
+        String[] subCat = new String[]{"Gaming", "Running", "Walking", "programming", "Binging", "Driving", "Cooking",
+        "Watching", "Gambling", "Eating", "Fishing", "Listening", "Partying", "Losing", "Winning", "Jamming", "Singing",
+        "Drawing", "Hopping", "Experimenting", "Trashing", "Drunken", "Fixing", "Repairing", "Drama", "Flying", "Jumping",
+        "Tasting", "Drinking"};
+
+
+        for (int i = 1; i < primaryCat.length; i++) {
             ParentBlogCategory parentBlogCategory = appContextUtil.getAppContext().getBean(ParentBlogCategory.class);
             ChildBlogCategory cBlogA = appContextUtil.getAppContext().getBean(ChildBlogCategory.class);
             ChildBlogCategory cBlogB = appContextUtil.getAppContext().getBean(ChildBlogCategory.class);
             ChildBlogCategory cBlogC = appContextUtil.getAppContext().getBean(ChildBlogCategory.class);
-            cBlogA.setLabel("Soccer");
-            cBlogB.setLabel("Football");
-            cBlogC.setLabel("Baseball");
+            ChildBlogCategory cBlogD = appContextUtil.getAppContext().getBean(ChildBlogCategory.class);
+            ChildBlogCategory cBlogE = appContextUtil.getAppContext().getBean(ChildBlogCategory.class);
+            ChildBlogCategory cBlogF = appContextUtil.getAppContext().getBean(ChildBlogCategory.class);
 
-            parentBlogCategory.setLabel("sports: "+i);
+            List<Integer> indexes = new ArrayList<>();
+            while (indexes.size() < 6) {
+                Integer index =  (int) (Math.random() * subCat.length);
+                if (!indexes.contains(index)) {
+                    indexes.add(index);
+                }
+            }
+
+            cBlogA.setLabel( subCat[indexes.get(0)] );
+            cBlogB.setLabel( subCat[indexes.get(1)] );
+            cBlogC.setLabel( subCat[indexes.get(2)] );
+            cBlogD.setLabel( subCat[indexes.get(3)] );
+            cBlogE.setLabel( subCat[indexes.get(4)] );
+            cBlogF.setLabel( subCat[indexes.get(5)] );
+
+            parentBlogCategory.setLabel(primaryCat[i]);
             parentBlogCategory.setPrimary(true);
 
             cBlogA.setParent(parentBlogCategory);
             cBlogB.setParent(parentBlogCategory);
             cBlogC.setParent(parentBlogCategory);
+            cBlogD.setParent(parentBlogCategory);
+            cBlogE.setParent(parentBlogCategory);
+            cBlogF.setParent(parentBlogCategory);
 
             List<ChildBlogCategory> cList = new ArrayList<>();
             cList.add(cBlogA);
             cList.add(cBlogB);
             cList.add(cBlogC);
+            cList.add(cBlogD);
+            cList.add(cBlogE);
+            cList.add(cBlogF);
 
             parentBlogCategory.setChildCategories(cList);
             pBlogCategoryDao.save(parentBlogCategory);
@@ -54,6 +86,10 @@ public class DataInitializer {
             cBlogCategoryDao.save(cBlogA);
             cBlogCategoryDao.save(cBlogB);
             cBlogCategoryDao.save(cBlogC);
+            cBlogCategoryDao.save(cBlogD);
+            cBlogCategoryDao.save(cBlogE);
+            cBlogCategoryDao.save(cBlogF);
+
 
         }
 
