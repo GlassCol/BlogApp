@@ -1,17 +1,14 @@
 package com.blogapp.domains;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.stereotype.Component;
-
+import lombok.*;
 import javax.persistence.*;
 
-@Component
+@Entity
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
-@Entity
+@AllArgsConstructor
 public class Post {
 
     @Id
@@ -21,16 +18,4 @@ public class Post {
     @Column(name="title")
     private String title;
 
-    public Post(Long id, String title) {
-        this.id = id;
-        this.title = title;
-    }
-
-    @Override
-    public String toString() {
-        return "Post{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                '}';
-    }
 }

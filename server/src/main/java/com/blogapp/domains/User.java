@@ -1,17 +1,15 @@
 package com.blogapp.domains;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.stereotype.Component;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Component
+@Entity
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
-@Entity
+@AllArgsConstructor
 public class User {
 
     @Id
@@ -21,17 +19,5 @@ public class User {
     @Column(name="username")
     private String username;
 
-    public User(Long id, String username) {
-        this.id = id;
-        this.username = username;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                '}';
-    }
 
 }

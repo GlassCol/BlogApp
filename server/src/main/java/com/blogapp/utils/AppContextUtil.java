@@ -8,18 +8,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class AppContextUtil implements ApplicationContextAware {
 
-    private static ApplicationContext appContext;
+    private ApplicationContext appContext;
 
-    public AppContextUtil(ApplicationContext appContext) {
-        AppContextUtil.appContext = appContext;
-    }
-
-    public static ApplicationContext getAppContext() {
+    public ApplicationContext getAppContext() {
         return appContext;
     }
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        AppContextUtil.appContext = applicationContext;
+        this.appContext = applicationContext;
     }
 }
