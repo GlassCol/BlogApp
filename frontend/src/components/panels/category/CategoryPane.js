@@ -7,7 +7,6 @@ export const CategoryPane = ( {id, parentCategory, subCategory}) => {
     const ddTargetId = "#flush-"+id;
     return (
         <>
-
             <dl className='accordion-item p-0 m-0' >
                 <dt className='accordion-header' id={dtId}>
                     <button className="accordion-button collapsed p-1 m-1" 
