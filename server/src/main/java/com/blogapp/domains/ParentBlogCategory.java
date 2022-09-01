@@ -13,10 +13,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(uniqueConstraints = { @UniqueConstraint(name = "parentLabel", columnNames = {"label"} )})
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-/**
- **
- */
 public class ParentBlogCategory {
 
     @Id

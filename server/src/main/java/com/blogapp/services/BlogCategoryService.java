@@ -5,6 +5,8 @@ import com.blogapp.repositories.IChildCategoryDao;
 import com.blogapp.repositories.IParentBlogCategoryDao;
 import com.blogapp.services.interfaces.IBlogCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,8 +25,15 @@ public class BlogCategoryService implements IBlogCategoryService {
 
     @Override
     public List<ParentBlogCategory> getBlogCategories() {
-        return parentBlogCategoryDao.findAll();
+        return parentBlogCategoryDao.findAll(
+                Sort.by(Sort.Direction.ASC, "label"));
     }
+
+    public List<ParentBlogCategory> getTrendingBlogCategories() {
+        return parentBlogCategoryDao.findAll(
+                PageRequest.of(0, 10)).stream().toList();
+    }
+
 
     @Override
     public ParentBlogCategory getBlogCategoryById(Long theId) {
@@ -33,7 +42,9 @@ public class BlogCategoryService implements IBlogCategoryService {
 
     @Override
     public void addBlogCategory(ParentBlogCategory parentBlogCategory) {
-        parentBlogCategoryDao.save(parentBlogCategory);
+        if (!parentBlogCategoryDao.existsByLabel(parentBlogCategory.getLabel())) {
+            parentBlogCategoryDao.save(parentBlogCategory);
+        }
     }
 
     @Override
