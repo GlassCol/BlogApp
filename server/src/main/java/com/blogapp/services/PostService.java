@@ -2,6 +2,7 @@ package com.blogapp.services;
 
 import com.blogapp.domains.Post;
 import com.blogapp.repositories.IPostDao;
+import com.blogapp.services.interfaces.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

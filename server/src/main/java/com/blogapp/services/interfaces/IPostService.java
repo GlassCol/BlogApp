@@ -1,4 +1,4 @@
-package com.blogapp.services;
+package com.blogapp.services.interfaces;
 
 import com.blogapp.domains.Post;
 import java.util.List;
