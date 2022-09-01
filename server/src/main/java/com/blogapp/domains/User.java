@@ -5,11 +5,6 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Getter
-@Setter
-@ToString
-@NoArgsConstructor
-@AllArgsConstructor
 public class User {
 
     @Id
@@ -18,6 +13,11 @@ public class User {
 
     @Column(name="username")
     private String username;
+
+    @Column(name="authToken")
+    private String authToken;
+
+
 
 
 }

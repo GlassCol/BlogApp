@@ -9,6 +9,7 @@ const Login = () => {
   return (
     <Container className="d-grid h-100">
       <Form className="text-center w-100">
+        <img className="loginLogo-img" src="frontend/public/blogger.ico" alt="Login Logo" />
         <h1 className="mb-3 fs-3 fw-normal">
           Please sign in
         </h1>
