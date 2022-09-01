@@ -1,5 +1,5 @@
-import { CategoryListPanel } from "./category/CategoryListPanel"
-import { TrendingListPanel } from "./trending/TrendingListPanel"
+import { CategoryListPanel } from './category/CategoryListPanel'
+import { TrendingListPanel } from './trending/TrendingListPanel'
 
 export const SidePanel = () => {
 

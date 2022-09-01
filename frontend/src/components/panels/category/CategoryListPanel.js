@@ -1,30 +1,9 @@
-import { useEffect, useState } from "react"
+import { useApiResources } from "../../../utils/useApiResources";
 import { CategoryPane } from "./CategoryPane"
 
 
 export const CategoryListPanel = () => {
-    const [categories, setCategories] = useState([]);
-    const [loading, setLoading] = useState(false);
-
-    useEffect(() => {
-        fetchData();
-    }, []);
-
-    const fetchData = () => {
-
-        setLoading(true);
-        fetch("http://localhost:8081/categories")
-            .then(response => response.json())
-            .then(data => {
-                setCategories(data);
-                setLoading(false);
-            })
-            .catch(error => {
-                console.log(error);
-                setLoading(false);
-            });
-    }
-    
+    const [categories, loading] = useApiResources("categories");
 
     return (
         <>
