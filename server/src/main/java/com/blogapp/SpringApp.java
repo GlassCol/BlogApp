@@ -15,6 +15,8 @@ public class SpringApp {
 		ApplicationContext appContext = SpringApplication.run(SpringApp.class, args);
 		DataInitializer dataInitializer = appContext.getBean(DataInitializer.class);
 		dataInitializer.seedBlogCategories();
+		dataInitializer.seedUsers();
+		dataInitializer.seedPostsAndComments();
 	}
 
 }

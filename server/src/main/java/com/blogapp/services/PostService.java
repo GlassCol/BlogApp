@@ -14,18 +14,49 @@ public class PostService implements IPostService {
     private final IPostDao postDao;
 
     @Autowired
-    PostService(IPostDao iPostDao) {
-        this.postDao = iPostDao;
+    PostService(IPostDao postDao) {
+        this.postDao = postDao;
     }
 
     @Override
-    public List<Post> getAll() {
+    public List<Post> getPosts() {
         return postDao.findAll();
     }
 
     @Override
-    public Post getOneBy(Long theId) {
+    public List<Post> getPostsByUserId(Long theId) {
+        return postDao.findByUserId(theId);
+    }
+
+    @Override
+    public List<Post> getPostsByCategoryId(Long theId) {
+        // todo implement query to get posts by a category id
+        return null;
+    }
+
+    @Override
+    public Post getPostById(Long theId) {
         return postDao.findById(theId).orElse(null);
     }
 
+    @Override
+    public void addPost(Post post) {
+        if (!postDao.existsById(post.getId())) {
+            postDao.save(post);
+        }
+    }
+
+    @Override
+    public void updatePost(Post post) {
+        if (postDao.existsById(post.getId())) {
+            postDao.save(post);
+        }
+    }
+
+    @Override
+    public void deletePostById(Long theId) {
+        if (postDao.existsById(theId)) {
+            postDao.deleteById(theId);
+        }
+    }
 }
