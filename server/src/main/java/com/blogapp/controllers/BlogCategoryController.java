@@ -12,6 +12,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping(path = {"/categories"}, produces = APPLICATION_JSON_VALUE)
+@CrossOrigin
 public class BlogCategoryController {
 
     private final IBlogCategoryService blogCategoryService;
@@ -26,6 +27,13 @@ public class BlogCategoryController {
     public List<ParentBlogCategory> getBlogCategories() {
         return blogCategoryService.getBlogCategories();
     }
+
+    @GetMapping("/trending")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ParentBlogCategory> getTrending() {
+        return blogCategoryService.getTrendingBlogCategories();
+    }
+
 
     @GetMapping("/{theId}")
     @ResponseStatus(HttpStatus.OK)

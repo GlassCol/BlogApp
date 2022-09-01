@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const CategoryPane = ( {id, parentCategory, subCategory}) => {
+export const CategoryPane = ( {id, label, childCategories}) => {
 
     const dtId = "heading-"+id;
     const ddId = "flush-"+id;
@@ -15,7 +15,7 @@ export const CategoryPane = ( {id, parentCategory, subCategory}) => {
                             data-bs-target={ddTargetId}
                             aria-expanded="false" 
                             aria-controls={ddId}>
-                        Category {parentCategory}
+                        <small>{label}</small>
                     </button>
                 </dt>
                 <dd id={ddId}
@@ -23,10 +23,15 @@ export const CategoryPane = ( {id, parentCategory, subCategory}) => {
                     aria-labelledby={dtId}
                     data-bs-parent="#accordionParent">
 
-                    <ul className="accordion-body">
-                        {subCategory.map((sub) => {
-                            return <li key={sub.id}>Category {sub.caption}</li> 
-                        })}
+                    <ul className="accordion-body m-0 p-2">
+                        <ul className='nav flex-column'>
+                            { childCategories.map((child) => {
+                                return <li className='nav-item border-0' 
+                                            key={child.id}>
+                                            <small>{child.label}</small>
+                                        </li> 
+                            }) }
+                        </ul>
                     </ul>
                 </dd>
             </dl>

@@ -2,6 +2,7 @@ package com.blogapp.services;
 
 import com.blogapp.domains.User;
 import com.blogapp.repositories.IUserDao;
+import com.blogapp.services.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

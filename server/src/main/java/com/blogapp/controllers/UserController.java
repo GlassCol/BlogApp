@@ -1,7 +1,7 @@
 package com.blogapp.controllers;
 
 import com.blogapp.domains.User;
-import com.blogapp.services.IUserService;
+import com.blogapp.services.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -28,10 +28,10 @@ public class DataInitializer {
 
     public void seedBlogCategories() {
         String[] primaryCat = new String[]{" ", "Fitness", "Game", "Technology", "Sport", "Television", "Movie",
-        "Anime", "Travel", "Food & Drink", "Bar", "Club", "Science", "Parade", "Festival", "Casino", "Music",
+        "Anime", "Travel", "Food", "Drink", "Bar", "Club", "Science", "Parade", "Festival", "Casino", "Music",
         "Wine", "Date", "Spiritual", "Auto", "Home" };
 
-        String[] subCat = new String[]{"Gaming", "Running", "Walking", "programming", "Binging", "Driving", "Cooking",
+        String[] subCat = new String[]{"Gaming", "Running", "Walking", "Programming", "Binging", "Driving", "Cooking",
         "Watching", "Gambling", "Eating", "Fishing", "Listening", "Partying", "Losing", "Winning", "Jamming", "Singing",
         "Drawing", "Hopping", "Experimenting", "Trashing", "Drunken", "Fixing", "Repairing", "Drama", "Flying", "Jumping",
         "Tasting", "Drinking"};
@@ -80,15 +80,16 @@ public class DataInitializer {
             cList.add(cBlogF);
 
             parentBlogCategory.setChildCategories(cList);
-            pBlogCategoryDao.save(parentBlogCategory);
-
-            cBlogCategoryDao.save(cBlogA);
-            cBlogCategoryDao.save(cBlogB);
-            cBlogCategoryDao.save(cBlogC);
-            cBlogCategoryDao.save(cBlogD);
-            cBlogCategoryDao.save(cBlogE);
-            cBlogCategoryDao.save(cBlogF);
-
+            if (!pBlogCategoryDao.existsByLabel(parentBlogCategory.getLabel())) {
+                System.out.println("...======================= exists" + parentBlogCategory);
+                pBlogCategoryDao.save(parentBlogCategory);
+                cBlogCategoryDao.save(cBlogA);
+                cBlogCategoryDao.save(cBlogB);
+                cBlogCategoryDao.save(cBlogC);
+                cBlogCategoryDao.save(cBlogD);
+                cBlogCategoryDao.save(cBlogE);
+                cBlogCategoryDao.save(cBlogF);
+            }
 
         }
 
