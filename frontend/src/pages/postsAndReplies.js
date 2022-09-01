@@ -4,6 +4,7 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { Banner } from '../components/banner/Banner'
 import { SidePanel } from '../components/panels/SidePanel'
+import Login from '../components/panels/login/Login'
 
 const PostsAndReplies = () => {
   return (
@@ -28,6 +29,7 @@ const PostsAndReplies = () => {
           </div>
 
         </section>
+      <Login />
       <Footer />
     </>
         )
