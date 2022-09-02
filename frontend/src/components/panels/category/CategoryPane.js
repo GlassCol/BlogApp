@@ -7,9 +7,9 @@ export const CategoryPane = ( {id, label, childCategories}) => {
     const ddTargetId = "#flush-"+id;
     return (
         <>
-            <dl className='accordion-item p-0 m-0' >
+            <dl className='accordion-item p-1 m-auto' >
                 <dt className='accordion-header' id={dtId}>
-                    <button className="accordion-button collapsed p-1 m-1" 
+                    <button className="accordion-button collapsed p-1 m-auto" 
                             type="button" 
                             data-bs-toggle="collapse" 
                             data-bs-target={ddTargetId}
@@ -23,7 +23,7 @@ export const CategoryPane = ( {id, label, childCategories}) => {
                     aria-labelledby={dtId}
                     data-bs-parent="#accordionParent">
 
-                    <ul className="accordion-body m-0 p-2">
+                    <ul className="accordion-body m-auto p-2">
                         <ul className='nav flex-column'>
                             { childCategories.map((child) => {
                                 return <li className='nav-item border-0' 
