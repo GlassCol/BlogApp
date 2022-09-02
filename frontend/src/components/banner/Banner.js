@@ -4,7 +4,7 @@ export const Banner = () => {
     return (
         <>
             <div className="row m-1">
-                <div className="border-0 d-flex justify-content-between p-3 m-0">
+                <div className="border-0 d-flex justify-content-between p-3 m-auto">
                     <svg className="bd-placeholder-img rounded " 
                         width="200" 
                         height="200" 
