@@ -17,6 +17,7 @@ public class DataInitializer {
     private final IPostDao postDao;
     private final IUserDao userDao;
     private final ICommentDao commentDao;
+    private final IPhotoDao photoDao;
     private final AppContextUtil appContextUtil;
 
     @Autowired
@@ -25,12 +26,14 @@ public class DataInitializer {
                            IPostDao postDao,
                            IUserDao userDao,
                            ICommentDao commentDao,
+                           IPhotoDao photoDao,
                            AppContextUtil appContextUtil) {
         this.parentBlogCategoryDao = parentBlogCategoryDao;
         this.childBlogCategoryDao = childBlogCategoryDao;
         this.postDao = postDao;
         this.userDao = userDao;
         this.commentDao = commentDao;
+        this.photoDao = photoDao;
         this.appContextUtil = appContextUtil;
     }
 
@@ -133,6 +136,21 @@ public class DataInitializer {
         return comment;
     }
 
+    private Photo createPhoto(int index) {
+
+        String[] titles = new String[] {"nesciunt", "eum", "et est occaecati", "qui est esse", "magnam facilis autem", "dolorem doore est ipsam",
+                "facilis pskas", "jsjalkks oiuoiewjiod"};
+        int[] imageNums = new int[]{315, 361, 596, 603, 300, 788, 283, 663, 900, 434, 800, 333, 122, 483,
+        898, 292, 748, 574, 390, 695, 233};
+
+        Photo photo = appContextUtil.getAppContext().getBean(Photo.class);
+//        int imgNum = (int) (Math.random() * 1000);
+        photo.setImageUrl("https://picsum.photos/id/"+imageNums[(int) (Math.random() * imageNums.length) ]+"/200/300");
+        photo.setTitle(titles[index]);
+        return photo;
+    }
+
+
     public void seedPostsAndCommentsWithUsers() {
         String[] titles = new String[] {"nesciunt", "eum", "et est occaecati", "qui est esse", "magnam facilis autem", "dolorem doore est ipsam",
         "facilis pskas", "jsjalkks oiuoiewjiod"};
@@ -164,20 +182,34 @@ public class DataInitializer {
             commentB.setPost(post);
             commentC.setPost(post);
             commentD.setPost(post);
+            // set the post comments
             post.setComments(comments);
 
+            // add comments to the list
             comments.add(commentA);
             comments.add(commentB);
             comments.add(commentC);
             comments.add(commentD);
 
-            // save the comments
+            // save the comments to db
             commentDao.save(commentA);
             commentDao.save(commentB);
             commentDao.save(commentC);
             commentDao.save(commentD);
 
-            // save the post
+            // create a photo list
+            List<Photo> photos = new ArrayList<>();
+            Photo photo = createPhoto(i);
+
+            // associate the photo with the post
+            photo.setPost(post);
+
+            // add the photo the photos list
+            photos.add(photo);
+            // save the photo to the db
+            photoDao.save(photo);
+
+            // save / update the post
             postDao.save(post);
 
         }

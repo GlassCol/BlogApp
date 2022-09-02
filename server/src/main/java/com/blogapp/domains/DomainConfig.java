@@ -31,6 +31,11 @@ public class DomainConfig {
         return new Comment();
     }
 
+    @Bean
+    @Scope(scopeName = "prototype")
+    Photo photo() {
+        return new Photo();
+    }
 
     @Bean
     @Scope(scopeName = "prototype")

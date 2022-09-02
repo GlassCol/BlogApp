@@ -46,6 +46,10 @@ public class Post {
     @ToString.Exclude
     private List<Comment> comments;
 
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private List<Photo> photos;
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id", nullable = true)
     @ToString.Exclude

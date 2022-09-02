@@ -6,6 +6,7 @@ import java.util.List;
 public interface IPostService {
 
     List<Post> getPosts();
+
     List<Post> getPostsByUserId(Long theId);
     List<Post> getPostsByCategoryId(Long theId);
     Post getPostById(Long theId);

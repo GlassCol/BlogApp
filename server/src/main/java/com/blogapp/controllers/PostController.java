@@ -1,12 +1,15 @@
 package com.blogapp.controllers;
 
+import com.blogapp.domains.Photo;
 import com.blogapp.domains.Post;
+import com.blogapp.services.interfaces.IPhotoService;
 import com.blogapp.services.interfaces.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -16,10 +19,12 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class PostController {
 
     private final IPostService postService;
+    private final IPhotoService photoService;
 
     @Autowired
-    PostController(IPostService postService) {
+    PostController(IPostService postService, IPhotoService photoService) {
         this.postService = postService;
+        this.photoService = photoService;
     }
 
     @GetMapping(path = {"", "/"})
@@ -39,6 +44,12 @@ public class PostController {
     public List<Post> getPostsByCategoryId(@PathVariable Long theId) {
         // todo this should call the category dao
         return postService.getPostsByCategoryId(theId);
+    }
+
+    @GetMapping(path = "/photos")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Photo> getPostPhotos() {
+        return photoService.getPhotos().stream().limit(4).toList();
     }
 
     @GetMapping(path = "/{theId}")

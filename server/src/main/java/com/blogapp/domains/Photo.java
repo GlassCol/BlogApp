@@ -1,12 +1,10 @@
 package com.blogapp.domains;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIncludeProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -15,35 +13,39 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 @AllArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-@NoArgsConstructor
-public class Comment {
+public class Photo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "body", nullable = false)
-    private String body;
+    @Column(name = "image_url")
+    private String imageUrl;
 
-    @Column(name = "isParent")
-    private boolean parent;
+    @Column(name = "title")
+    private String title;
 
-    @Column(name="updated_at")
+    // Options types will be images belonging to a post or user
+    @Column(name = "image_type")
+    @Value(value = "post")
+    private String imageType;
+
+    @Column(name = "created_at", nullable = false, updatable = false)
+    @CreationTimestamp
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
     @UpdateTimestamp
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updatedAt;
-
-    @CreationTimestamp
-    @Column(name="created_at", nullable = false, updatable = false)
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime createdAt;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "post_id")
     @JsonIncludeProperties(value = {"id"})
     private Post post;
-
 
 }
