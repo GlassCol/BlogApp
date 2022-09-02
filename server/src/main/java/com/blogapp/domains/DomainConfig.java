@@ -17,7 +17,6 @@ public class DomainConfig {
     @Scope(scopeName = "prototype")
     ChildBlogCategory childBlogCategory() {
         return new ChildBlogCategory();
-
     }
 
     @Bean
@@ -25,6 +24,13 @@ public class DomainConfig {
     Post post() {
         return new Post();
     }
+
+    @Bean
+    @Scope(scopeName = "prototype")
+    Comment comment() {
+        return new Comment();
+    }
+
 
     @Bean
     @Scope(scopeName = "prototype")

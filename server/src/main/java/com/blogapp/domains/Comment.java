@@ -7,51 +7,45 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
 @AllArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class Post {
+@NoArgsConstructor
+public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="title")
-    private String title;
-
-    @Column(name="body", columnDefinition = "TEXT")
+    @Column(name = "body", nullable = false)
     private String body;
 
-    @Column(name = "updated_at")
+    @Column(name = "isParent")
+    private boolean parent;
+
+    @Column(name="updated_at")
     @UpdateTimestamp
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updatedAt;
 
-    @Column(name = "created_at", nullable = false, updatable = false)
     @CreationTimestamp
+    @Column(name="created_at", nullable = false, updatable = false)
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
-    @ToString.Exclude
-    private List<Comment> comments;
-
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "user_id", nullable = true)
-    @ToString.Exclude
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "post_id")
     @JsonIncludeProperties(value = {"id"})
-    @CreatedBy
-    private User user;
+    private Post post;
 
 
 }

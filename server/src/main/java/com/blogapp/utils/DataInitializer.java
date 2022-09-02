@@ -1,14 +1,8 @@
 package com.blogapp.utils;
 
 
-import com.blogapp.domains.ChildBlogCategory;
-import com.blogapp.domains.ParentBlogCategory;
-import com.blogapp.domains.Post;
-import com.blogapp.domains.User;
-import com.blogapp.repositories.IChildCategoryDao;
-import com.blogapp.repositories.IParentBlogCategoryDao;
-import com.blogapp.repositories.IPostDao;
-import com.blogapp.repositories.IUserDao;
+import com.blogapp.domains.*;
+import com.blogapp.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +16,7 @@ public class DataInitializer {
     private final IChildCategoryDao childBlogCategoryDao;
     private final IPostDao postDao;
     private final IUserDao userDao;
+    private final ICommentDao commentDao;
     private final AppContextUtil appContextUtil;
 
     @Autowired
@@ -29,11 +24,13 @@ public class DataInitializer {
                            IChildCategoryDao childBlogCategoryDao,
                            IPostDao postDao,
                            IUserDao userDao,
+                           ICommentDao commentDao,
                            AppContextUtil appContextUtil) {
         this.parentBlogCategoryDao = parentBlogCategoryDao;
         this.childBlogCategoryDao = childBlogCategoryDao;
         this.postDao = postDao;
         this.userDao = userDao;
+        this.commentDao = commentDao;
         this.appContextUtil = appContextUtil;
     }
 
@@ -117,8 +114,26 @@ public class DataInitializer {
 
     }
 
+    private User createUser(int index) {
+        String[] usernames = new String[] {"Leane", "Ervin", "Beach", "Baum", "Patrica", "Lebsack", "Kyle", "Sam", "Sara", "Alice"};
+        User user = appContextUtil.getAppContext().getBean(User.class);
+        user.setUsername(usernames[index]);
+        return user;
+    }
 
-    public void seedPostsAndComments() {
+    private Comment createComment(int index) {
+        String[] comments = new String[]{"nesciquas odio", "eum et est occcati", "qi est esse", "magnam faclis autem", "dolorem dole est ipsam",
+                "dolorem dolore espsam", "nesciunt iure omnis dolorem tema et accusantium", "uos veniam quod sed accusamus veritatis error", "nesciunt quas odio", "eum et est occaecati", "qui est esse", "magnam facilis autem", "dolorem dole est ipsam",
+                "dolorem dolore est ipsam", "nesciunt iure omnis dolorem tempora et accusantium" };
+        Comment comment = appContextUtil.getAppContext().getBean(Comment.class);
+        comment.setBody(comments[index]);
+        if (index == 0) {
+            comment.setParent(true);
+        }
+        return comment;
+    }
+
+    public void seedPostsAndCommentsWithUsers() {
         String[] titles = new String[] {"nesciunt", "eum", "et est occaecati", "qui est esse", "magnam facilis autem", "dolorem doore est ipsam",
         "facilis pskas", "jsjalkks oiuoiewjiod"};
         String[] body = new String[]{"nesciunt quas odio", "eum et est occaecati", "qui est esse", "magnam facilis autem", "dolorem dole est ipsam",
@@ -127,10 +142,44 @@ public class DataInitializer {
         // LOOP MUST NOT BE GREATER THAN CREATED USERS
         for (int i = 0; i < titles.length; i++) {
             Post post = appContextUtil.getAppContext().getBean(Post.class);
-                post.setUserId( (long) i);
-                post.setTitle(titles[i]);
-                post.setBody(body[i]);
-                postDao.save(post);
+            User user = createUser(i);
+
+            // save the user
+            userDao.save(user);
+
+            // set objects to the post object
+            post.setUser(user);
+            post.setTitle(titles[i]);
+            post.setBody(body[i]);
+
+            // save the post
+            postDao.save(post);
+
+            List<Comment> comments = new ArrayList<>();
+            Comment commentA = createComment(i);
+            Comment commentB = createComment(i+1);
+            Comment commentC = createComment(i+2);
+            Comment commentD = createComment(i+3);
+            commentA.setPost(post);
+            commentB.setPost(post);
+            commentC.setPost(post);
+            commentD.setPost(post);
+            post.setComments(comments);
+
+            comments.add(commentA);
+            comments.add(commentB);
+            comments.add(commentC);
+            comments.add(commentD);
+
+            // save the comments
+            commentDao.save(commentA);
+            commentDao.save(commentB);
+            commentDao.save(commentC);
+            commentDao.save(commentD);
+
+            // save the post
+            postDao.save(post);
+
         }
     }
 
