@@ -25,6 +25,7 @@ const Login = () => {
         </Form.Group>
         <div className="d-grid">
           <Button variant="primary" size='lg'>Sign in</Button>
+          <Button variant='primary' size='lg' className='m-4'>Create an Account</Button>
         </div>
         <p className="mt-5">&copy; 2022-2023</p>
       </Form>
