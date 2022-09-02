@@ -1,20 +1,10 @@
 package com.blogapp;
 
-import com.blogapp.domains.User;
 import com.blogapp.utils.DataInitializer;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.web.context.support.AbstractRefreshableWebApplicationContext;
-import org.springframework.web.context.support.XmlWebApplicationContext;
-
 
 @SpringBootApplication
 @ComponentScan("com.blogapp")
