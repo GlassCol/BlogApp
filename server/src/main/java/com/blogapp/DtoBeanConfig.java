@@ -1,10 +1,10 @@
 package com.blogapp;
 
-import com.blogapp.category.dto.ParentCategory;
-import com.blogapp.category.dto.SubCategory;
+import com.blogapp.category.domain.ParentCategory;
+import com.blogapp.category.domain.SubCategory;
 import com.blogapp.comment.domain.Comment;
-import com.blogapp.category.photo.dto.Photo;
-import com.blogapp.user.dto.User;
+import com.blogapp.photo.domain.Photo;
+import com.blogapp.user.domain.User;
 import com.blogapp.post.domain.Post;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

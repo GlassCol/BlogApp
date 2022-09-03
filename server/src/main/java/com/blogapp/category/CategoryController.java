@@ -1,11 +1,9 @@
 package com.blogapp.category;
 
 import com.blogapp.ResponseHandler;
-import com.blogapp.category.dto.ParentCategory;
-import com.blogapp.category.dto.ParentCategoryDTO;
+import com.blogapp.category.domain.ParentCategory;
+import com.blogapp.category.domain.ParentCategoryDTO;
 import com.blogapp.category.services.ICategoryService;
-import org.apache.naming.factory.BeanFactory;
-import org.springframework.beans.factory.BeanFactoryUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;

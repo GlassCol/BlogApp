@@ -1,8 +1,8 @@
-package com.blogapp.category.photo;
+package com.blogapp.photo;
 
-import com.blogapp.category.photo.dto.Photo;
-import com.blogapp.category.photo.repositories.IPhotoDao;
-import com.blogapp.category.photo.services.IPhotoService;
+import com.blogapp.photo.domain.Photo;
+import com.blogapp.photo.repositories.IPhotoDao;
+import com.blogapp.photo.services.IPhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

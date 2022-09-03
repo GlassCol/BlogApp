@@ -4,7 +4,7 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="com.blogapp.user.dto.User" table="tbl_users">
+    <class name="com.blogapp.user.domain.User" table="tbl_users">
         <id name="id">
             <generator class="assigned"/>
         </id>

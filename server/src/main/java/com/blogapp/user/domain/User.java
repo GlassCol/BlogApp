@@ -1,4 +1,4 @@
-package com.blogapp.user.dto;
+package com.blogapp.user.domain;
 
 
 import javax.persistence.*;

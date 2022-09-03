@@ -1,11 +1,11 @@
 package com.blogapp.post;
 
 import com.blogapp.ResponseHandler;
-import com.blogapp.category.photo.dto.Photo;
+import com.blogapp.photo.domain.Photo;
 import com.blogapp.post.domain.Post;
 import com.blogapp.post.domain.PostDto;
 import com.blogapp.post.services.IPostService;
-import com.blogapp.category.photo.services.IPhotoService;
+import com.blogapp.photo.services.IPhotoService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;

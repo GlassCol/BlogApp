@@ -1,8 +1,8 @@
 package com.blogapp.post.domain;
 
-import com.blogapp.category.photo.dto.Photo;
+import com.blogapp.photo.domain.Photo;
 import com.blogapp.comment.domain.Comment;
-import com.blogapp.user.dto.User;
+import com.blogapp.user.domain.User;
 
 import java.time.LocalDateTime;
 import java.util.List;

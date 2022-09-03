@@ -1,6 +1,6 @@
 package com.blogapp.category.repositories;
 
-import com.blogapp.category.dto.ParentCategory;
+import com.blogapp.category.domain.ParentCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

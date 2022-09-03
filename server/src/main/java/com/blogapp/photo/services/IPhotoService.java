@@ -1,6 +1,6 @@
-package com.blogapp.category.photo.services;
+package com.blogapp.photo.services;
 
-import com.blogapp.category.photo.dto.Photo;
+import com.blogapp.photo.domain.Photo;
 
 import java.util.List;
 

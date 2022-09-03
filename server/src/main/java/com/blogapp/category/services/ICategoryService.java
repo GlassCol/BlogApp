@@ -1,6 +1,6 @@
 package com.blogapp.category.services;
 
-import com.blogapp.category.dto.ParentCategory;
+import com.blogapp.category.domain.ParentCategory;
 import java.util.List;
 
 public interface ICategoryService {

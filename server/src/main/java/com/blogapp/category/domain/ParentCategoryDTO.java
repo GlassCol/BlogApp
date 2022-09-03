@@ -1,4 +1,4 @@
-package com.blogapp.category.dto;
+package com.blogapp.category.domain;
 import java.util.List;
 
 public class ParentCategoryDTO {

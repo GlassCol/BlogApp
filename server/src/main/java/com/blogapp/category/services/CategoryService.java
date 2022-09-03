@@ -1,6 +1,6 @@
 package com.blogapp.category.services;
 
-import com.blogapp.category.dto.ParentCategory;
+import com.blogapp.category.domain.ParentCategory;
 import com.blogapp.category.repositories.IParentCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;

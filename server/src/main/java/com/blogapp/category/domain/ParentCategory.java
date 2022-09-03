@@ -1,4 +1,4 @@
-package com.blogapp.category.dto;
+package com.blogapp.category.domain;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;

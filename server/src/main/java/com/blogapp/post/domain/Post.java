@@ -1,8 +1,8 @@
 package com.blogapp.post.domain;
 
 import com.blogapp.comment.domain.Comment;
-import com.blogapp.category.photo.dto.Photo;
-import com.blogapp.user.dto.User;
+import com.blogapp.photo.domain.Photo;
+import com.blogapp.user.domain.User;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;

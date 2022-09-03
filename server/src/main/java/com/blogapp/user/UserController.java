@@ -1,6 +1,6 @@
 package com.blogapp.user;
 
-import com.blogapp.user.dto.User;
+import com.blogapp.user.domain.User;
 import com.blogapp.user.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

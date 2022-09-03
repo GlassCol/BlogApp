@@ -1,4 +1,4 @@
-package com.blogapp.category.photo.dto;
+package com.blogapp.photo.domain;
 
 import com.blogapp.post.domain.Post;
 import com.fasterxml.jackson.annotation.*;
