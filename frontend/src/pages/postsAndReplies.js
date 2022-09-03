@@ -4,8 +4,8 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { Banner } from '../components/banner/Banner'
 import { SidePanel } from '../components/panels/SidePanel'
-import Login from '../components/panels/login/Login'
 import PostCreator from '../components/postsandreplies/PostCreator'
+import Login from './Login'
 
 const PostsAndReplies = () => {
   return (
@@ -41,8 +41,8 @@ const PostsAndReplies = () => {
             </div>
           </div>
 
-      </section>
-      {/* <Footer /> */}
+        </section>
+      <Footer />
     </>
         )
 }
