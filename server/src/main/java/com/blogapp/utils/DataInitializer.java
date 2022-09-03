@@ -1,8 +1,18 @@
 package com.blogapp.utils;
 
 
-import com.blogapp.domains.*;
-import com.blogapp.repositories.*;
+import com.blogapp.category.repositories.ISubCategoryRepository;
+import com.blogapp.category.repositories.IParentCategoryRepository;
+import com.blogapp.category.dto.ParentCategory;
+import com.blogapp.category.dto.SubCategory;
+import com.blogapp.comment.domain.Comment;
+import com.blogapp.comment.repositories.ICommentDao;
+import com.blogapp.category.photo.repositories.IPhotoDao;
+import com.blogapp.category.photo.dto.Photo;
+import com.blogapp.post.domain.Post;
+import com.blogapp.post.repositories.IPostDao;
+import com.blogapp.user.dto.User;
+import com.blogapp.user.repositories.IUserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,8 +22,8 @@ import java.util.List;
 @Component
 public class DataInitializer {
 
-    private final IParentBlogCategoryDao parentBlogCategoryDao;
-    private final IChildCategoryDao childBlogCategoryDao;
+    private final IParentCategoryRepository parentBlogCategoryDao;
+    private final ISubCategoryRepository childBlogCategoryDao;
     private final IPostDao postDao;
     private final IUserDao userDao;
     private final ICommentDao commentDao;
@@ -21,8 +31,8 @@ public class DataInitializer {
     private final AppContextUtil appContextUtil;
 
     @Autowired
-    public DataInitializer(IParentBlogCategoryDao parentBlogCategoryDao,
-                           IChildCategoryDao childBlogCategoryDao,
+    public DataInitializer(IParentCategoryRepository parentBlogCategoryDao,
+                           ISubCategoryRepository childBlogCategoryDao,
                            IPostDao postDao,
                            IUserDao userDao,
                            ICommentDao commentDao,
@@ -106,21 +116,15 @@ public class DataInitializer {
 
     }
 
-    public void seedUsers() {
-        String[] usernames = new String[] {"Leane", "Ervin", "Beach", "Baum", "Patrica", "Lebsack", "Kyle", "Sam", "Sara", "Alice"};
-
-        for (int i = 0; i < usernames.length; i++) {
-            User user = appContextUtil.getAppContext().getBean(User.class);
-            user.setUsername(usernames[i]);
-            userDao.save(user);
-        }
-
-    }
-
     private User createUser(int index) {
-        String[] usernames = new String[] {"Leane", "Ervin", "Beach", "Baum", "Patrica", "Lebsack", "Kyle", "Sam", "Sara", "Alice"};
+        String[] usernames = new String[] {"Leane", "Henry", "Ervin", "Beach", "Baum",
+                "Patrica", "Lebsack", "Kyle", "Sam", "Sara", "Alice", "Kyle", "Larry"};
         User user = appContextUtil.getAppContext().getBean(User.class);
         user.setUsername(usernames[index]);
+        user.setFirstName(usernames[index]);
+        user.setLastName(usernames[(int) (Math.random() * usernames.length)]);
+        user.setEmail(user.getUsername() + "@example.com");
+
         return user;
     }
 
@@ -149,7 +153,6 @@ public class DataInitializer {
         photo.setTitle(titles[index]);
         return photo;
     }
-
 
     public void seedPostsAndCommentsWithUsers() {
         String[] titles = new String[] {"nesciunt", "eum", "et est occaecati", "qui est esse", "magnam facilis autem", "dolorem doore est ipsam",
