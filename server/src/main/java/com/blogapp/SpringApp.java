@@ -5,9 +5,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ImportResource;
 
 @SpringBootApplication
 @ComponentScan("com.blogapp")
+@ImportResource({"hibernate.cfg.xml"})
 public class SpringApp {
 
 	public static void main(String[] args) {
@@ -29,8 +31,9 @@ public class SpringApp {
 		ConfigurableApplicationContext appContext = SpringApplication.run(SpringApp.class, args);
 
 		DataInitializer dataInitializer = appContext.getBean(DataInitializer.class);
-		dataInitializer.seedBlogCategories();
-		dataInitializer.seedPostsAndCommentsWithUsers();
+		dataInitializer.seedDb();
+//		dataInitializer.seedBlogCategories();
+//		dataInitializer.seedPostsAndCommentsWithUsers();
 //=======
 //
 //		t.commit();
@@ -38,6 +41,7 @@ public class SpringApp {
 //
 //>>>>>>> a991e9b8460bf4e40ca11a95461229ea404478d0
 	}
+
 
 }
 

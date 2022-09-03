@@ -2,14 +2,17 @@ import React from 'react'
 import Container from 'react-bootstrap/Container'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import Col from 'react-bootstrap/Col'
-import Row from 'react-bootstrap/Row'
+import blogIcon from "./blogger.png";
 
 const Login = () => {
   return (
-    <Container className="d-grid h-100">
-      <Form className="text-center w-100">
-        <img className="loginLogo-img" src="frontend/public/blogger.ico" alt="Login Logo" />
+    <Container className="d-grid h-100 ">
+      <Form className="text-center w-100 ps-5 pe-5 mb-5">
+        <img className="login Logo-img p-3" 
+            src={blogIcon} 
+            width="80" 
+            height="90" 
+            alt="Login Logo" />
         <h1 className="mb-3 fs-3 fw-normal">
           Please sign in
         </h1>
@@ -28,7 +31,7 @@ const Login = () => {
         <div className="d-grid">
           <Button variant="primary" size='lg'>Sign in</Button>
         </div>
-        <p className="mt-5">&copy; 2022-2023</p>
+        {/* <p className="mt-5">&copy; 2022-2023</p> */}
       </Form>
     </Container>
   )

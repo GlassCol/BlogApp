@@ -47,7 +47,7 @@ public class DataInitializer {
         this.appContextUtil = appContextUtil;
     }
 
-    public void seedBlogCategories() {
+    private void seedBlogCategories() {
         String[] primaryCat = new String[]{" ", "Fitness", "Game", "Technology", "Sport", "Television", "Movie",
         "Anime", "Travel", "Food", "Drink", "Bar", "Club", "Science", "Parade", "Festival", "Casino", "Music",
         "Wine", "Date", "Spiritual", "Auto", "Home" };
@@ -154,7 +154,7 @@ public class DataInitializer {
         return photo;
     }
 
-    public void seedPostsAndCommentsWithUsers() {
+    private void seedPostsAndCommentsWithUsers() {
         String[] titles = new String[] {"nesciunt", "eum", "et est occaecati", "qui est esse", "magnam facilis autem", "dolorem doore est ipsam",
         "facilis pskas", "jsjalkks oiuoiewjiod"};
         String[] body = new String[]{"nesciunt quas odio", "eum et est occaecati", "qui est esse", "magnam facilis autem", "dolorem dole est ipsam",
@@ -218,4 +218,8 @@ public class DataInitializer {
         }
     }
 
+    public void seedDb() {
+        seedBlogCategories();
+        seedPostsAndCommentsWithUsers();
+    }
 }

@@ -9,7 +9,7 @@ export const useApiResources = (resourceUrl) => {
     useEffect(() => {
         fetchResource();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [resourceUrl] )
 
 
     const fetchResource = () => {
@@ -17,7 +17,8 @@ export const useApiResources = (resourceUrl) => {
         fetch(`http://localhost:8081/${resourceUrl}`)
             .then(response => response.json())
             .then(data => {
-                setResource(data);
+                console.log(data.data);
+                setResource(data.data);
                 setLoading(false);
             })
             .catch(error => {

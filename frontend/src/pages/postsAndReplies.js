@@ -10,11 +10,17 @@ import PostCreator from '../components/postsandreplies/PostCreator'
 const PostsAndReplies = () => {
   return (
     <>
-      <Header />
-        <section className='row'>
+      <section className='row'>
 
-          <section className='col col-12'>
-            <Banner />
+        <Header />
+          <Login />
+          <section className='container'>
+            <div className='row'>
+              <div className='d-flex flex-wrap justify-content-between'>
+                <Banner />
+              </div>
+              
+            </div>
           </section>
           <div className='container'>
             <div className='row'>
@@ -25,19 +31,18 @@ const PostsAndReplies = () => {
           </div>
           <div className='container'>
             <div className='row'>
-              <article className='col col-8'>
-                <PostSection />
-              </article>
-              
-              <article className='col col-4'>
-                <SidePanel />
-              </article>
+                <div className='w-75 mx-auto d-block'>
+                  <PostSection />
+                </div>
+                <div className='w-25 mx-auto d-block'
+                      style={{ minWidth: '240px', maxWidth: '100vw' }}>
+                  <SidePanel />
+                </div>
             </div>
           </div>
 
-        </section>
-      <Login />
-      <Footer />
+      </section>
+      {/* <Footer /> */}
     </>
         )
 }

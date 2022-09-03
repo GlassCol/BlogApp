@@ -5,10 +5,10 @@ export const SidePanel = () => {
 
     return (
         <>
-        <div className='container'>
+        {/* <div className='container'> */}
             <TrendingListPanel />
             <CategoryListPanel />
-            </div>
+            {/* </div> */}
         </>
     )
 }

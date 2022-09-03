@@ -7,7 +7,7 @@ export const CategoryListPanel = () => {
 
     return (
         <>
-            <article className='card border border-0'>
+            <article className='card border border-0 w-100'>
                 <dl className='card-body'>
                     <dt className='card-title text-dark' > CATEGORIES ... </dt>
                     <section className='accordion accordion-flush ' id='accordionParent'>
@@ -17,7 +17,7 @@ export const CategoryListPanel = () => {
                                 return <CategoryPane key={category.id} 
                                     id={category.id}
                                     label={category.label}
-                                    childCategories={category.childCategories}
+                                    subCategories={category.subCategories}
                                     
                                     />
                         }) }

@@ -4,7 +4,7 @@ import { useApiResources } from '../../../utils/useApiResources';
 
 export const TrendingListPanel = () => {
     const [trending, loading] = useApiResources("categories/trending");
-    
+
     return (
         <>
             <article className='card border border-0 '>

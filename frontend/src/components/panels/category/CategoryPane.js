@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const CategoryPane = ( {id, label, childCategories}) => {
+export const CategoryPane = ( {id, label, subCategories}) => {
 
     const dtId = "heading-"+id;
     const ddId = "flush-"+id;
@@ -25,7 +25,7 @@ export const CategoryPane = ( {id, label, childCategories}) => {
 
                     <ul className="accordion-body m-auto p-2">
                         <ul className='nav flex-column'>
-                            { childCategories.map((child) => {
+                            { subCategories.map((child) => {
                                 return <li className='nav-item border-0' 
                                             key={child.id}>
                                             <small>{child.label}</small>

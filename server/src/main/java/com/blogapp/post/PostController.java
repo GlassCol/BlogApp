@@ -1,17 +1,17 @@
 package com.blogapp.post;
 
+import com.blogapp.ResponseHandler;
 import com.blogapp.category.photo.dto.Photo;
 import com.blogapp.post.domain.Post;
 import com.blogapp.post.domain.PostDto;
 import com.blogapp.post.services.IPostService;
 import com.blogapp.category.photo.services.IPhotoService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.function.ServerResponse;
 
 import java.util.List;
 import java.util.Objects;
@@ -20,6 +20,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @CrossOrigin
+@Log4j2
 @RequestMapping(path = {"/posts"}, produces = APPLICATION_JSON_VALUE)
 public class PostController {
 
@@ -34,75 +35,64 @@ public class PostController {
         this.applicationContext = applicationContext;
     }
 
-    // utilize Server Response to handle errors
+
     @GetMapping(path = {"", "/"})
-    public ServerResponse getPosts() {
+    public ResponseEntity<Object> getPosts() {
         List<Post> posts = postService.getPosts();
 
-        if (!posts.isEmpty()) {
-            return ServerResponse.ok().body(posts);
-        } else {
-            return ServerResponse.status(HttpStatus.NOT_FOUND).build();
+        if (posts.isEmpty()) {
+            log.info("No content");
+            return ResponseHandler.response(null, HttpStatus.NO_CONTENT);
         }
+        return ResponseHandler.response(posts, HttpStatus.OK);
+
     }
 
     @GetMapping(path = "/users/{theId}")
-    public ResponseEntity<List<Post>> getPostByUserId(@PathVariable Long theId) {
-        try {
-            List<Post> posts = postService.getPostsByUserId(theId);
+    public ResponseEntity<Object> getPostByUserId(@PathVariable Long theId) {
+        List<Post> posts = postService.getPostsByUserId(theId);
 
-            if (posts.isEmpty()) {
-                return ResponseEntity.noContent().build();
-            }
-
-            return ResponseEntity.ok().headers(new HttpHeaders()).body(posts);
-        } catch (Exception ex) {
-            return ResponseEntity.internalServerError().build();
+        if (posts.isEmpty()) {
+            log.info("No posts found for user "+theId);
+            return ResponseHandler.response(null, HttpStatus.NOT_FOUND, "No posts found for user "+theId);
         }
+        return ResponseHandler.response(posts, HttpStatus.OK);
 
     }
 
     @GetMapping(path = "/categories/{theId}")
-    public ResponseEntity<List<Post>> getPostsByCategoryId(@PathVariable Long theId) {
-        try {
-            List<Post> posts = postService.getPostsByCategoryId(theId);
+    public ResponseEntity<Object> getPostsByCategoryId(@PathVariable Long theId) {
+        List<Post> posts = postService.getPostsByCategoryId(theId);
 
-            if (posts.isEmpty()) {
-                return ResponseEntity.noContent().build();
-            }
-
-            return ResponseEntity.ok(postService.getPostsByCategoryId(theId));
-        } catch (Exception ex) {
-            return ResponseEntity.internalServerError().build();
+        if (posts.isEmpty()) {
+            log.info("No categories found");
+            return ResponseHandler.response(null, HttpStatus.NOT_FOUND, "No categories found for "+theId);
         }
+        return ResponseHandler.response(posts, HttpStatus.OK);
 
     }
 
     @GetMapping(path = "/photos")
-    public ResponseEntity<List<Photo>> getPostPhotos() {
-        try {
-            List<Photo> photos = photoService.getPhotos().subList(0, 4);
+    public ResponseEntity<Object> getPostPhotos() {
+        List<Photo> photos = photoService.getPhotos().subList(0, 4);
 
-            if (photos.isEmpty()) {
-                return ResponseEntity.noContent().build();
-            }
-
-            return ResponseEntity.ok().body(photos);
-        } catch (Exception ex) {
-            return ResponseEntity.internalServerError().build();
+        if (photos.isEmpty()) {
+            log.info("No photos found");
+            return ResponseHandler.response(null, HttpStatus.NO_CONTENT, "No photos found");
         }
+       return ResponseHandler.response(photos, HttpStatus.OK);
 
     }
 
     @GetMapping(path = "/{theId}")
-    @ResponseBody
-    public ResponseEntity<Post>  getPostsById(@PathVariable Long theId)  {
+    public ResponseEntity<Object>  getPostsById(@PathVariable Long theId)  {
         Post post = postService.getPostById(theId);
 
         if (Objects.isNull(post)) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            log.info("No posts found for user "+theId);
+            return ResponseHandler.response(null, HttpStatus.NOT_FOUND, "No posts found for user "+theId);
         }
-        return new ResponseEntity<>(post, HttpStatus.OK);
+        return ResponseHandler.response(post, HttpStatus.OK);
 
     }
 
@@ -113,10 +103,11 @@ public class PostController {
 
         try {
             postService.addPost(post);
+            return ResponseHandler.response(null, HttpStatus.CREATED, "The post was successfully created");
 
-            return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (Exception ex) {
-            return ResponseEntity.internalServerError().build();
+            log.info(ex.getMessage());
+            return ResponseHandler.response(ex.getMessage(), HttpStatus.NOT_ACCEPTABLE, "An error has occurred. Post could not be created");
         }
 
     }
@@ -127,13 +118,13 @@ public class PostController {
         Post post = applicationContext.getBean(Post.class);
         post = post.mapDtoToPost(postDto);
 
-        if (Objects.nonNull(post)) {
-
+        try {
             postService.updatePost(post);
+            return ResponseHandler.response(null, HttpStatus.OK, "Resource updated successfully");
 
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
+        } catch (Exception ex) {
+            log.info(ex.getMessage());
+            return ResponseHandler.response(ex.getMessage(), HttpStatus.NOT_MODIFIED, HttpStatus.NOT_MODIFIED.getReasonPhrase());
         }
 
     }
@@ -143,10 +134,11 @@ public class PostController {
     public ResponseEntity<Object> deletePostById(@PathVariable Long theId) {
         try {
             postService.deletePostById(theId);
+            return ResponseHandler.response(null, HttpStatus.OK, "Resource deleted successfully");
 
-            return ResponseEntity.noContent().build();
         } catch (Exception ex) {
-            return ResponseEntity.internalServerError().build();
+            log.info(ex.getMessage());
+            return ResponseHandler.response(ex.getMessage(), HttpStatus.NOT_MODIFIED,  HttpStatus.NOT_MODIFIED.getReasonPhrase());
         }
 
     }
