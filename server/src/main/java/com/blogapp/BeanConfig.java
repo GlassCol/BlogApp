@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
 @Configuration
-public class DtoBeanConfig {
+public class BeanConfig {
 
     @Bean
     @Scope(scopeName = "prototype")
