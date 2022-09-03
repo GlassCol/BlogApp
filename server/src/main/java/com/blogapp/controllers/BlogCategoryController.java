@@ -1,6 +1,6 @@
 package com.blogapp.controllers;
 
-import com.blogapp.domains.ParentBlogCategory;
+import com.blogapp.domains.ParentCategory;
 import com.blogapp.services.interfaces.IBlogCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,27 +24,27 @@ public class BlogCategoryController {
 
     @GetMapping({"", "/"})
     @ResponseStatus(HttpStatus.OK)
-    public List<ParentBlogCategory> getBlogCategories() {
+    public List<ParentCategory> getBlogCategories() {
         return blogCategoryService.getBlogCategories();
     }
 
     @GetMapping("/trending")
     @ResponseStatus(HttpStatus.OK)
-    public List<ParentBlogCategory> getTrending() {
+    public List<ParentCategory> getTrending() {
         return blogCategoryService.getTrendingBlogCategories();
     }
 
 
     @GetMapping("/{theId}")
     @ResponseStatus(HttpStatus.OK)
-    public ParentBlogCategory getBlogCategoryById(@PathVariable("theId") Long theId) {
+    public ParentCategory getBlogCategoryById(@PathVariable("theId") Long theId) {
         return blogCategoryService.getBlogCategoryById(theId);
     }
 
     @PostMapping(path = {"/"}, consumes = {APPLICATION_JSON_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
-    public void addBlogCategory(@RequestBody ParentBlogCategory parentBlogCategory) {
-        blogCategoryService.addBlogCategory(parentBlogCategory);
+    public void addBlogCategory(@RequestBody ParentCategory parentCategory) {
+        blogCategoryService.addBlogCategory(parentCategory);
     }
 
     @DeleteMapping("/{theId}")

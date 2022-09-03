@@ -9,14 +9,14 @@ public class DomainConfig {
 
     @Bean
     @Scope(scopeName = "prototype")
-    ParentBlogCategory parentBlogCategory() {
-        return new ParentBlogCategory();
+    ParentCategory parentBlogCategory() {
+        return new ParentCategory();
     }
 
     @Bean
     @Scope(scopeName = "prototype")
-    ChildBlogCategory childBlogCategory() {
-        return new ChildBlogCategory();
+    SubCategory childBlogCategory() {
+        return new SubCategory();
     }
 
     @Bean

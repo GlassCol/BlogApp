@@ -1,6 +1,6 @@
 package com.blogapp.services;
 
-import com.blogapp.domains.ParentBlogCategory;
+import com.blogapp.domains.ParentCategory;
 import com.blogapp.repositories.IChildCategoryDao;
 import com.blogapp.repositories.IParentBlogCategoryDao;
 import com.blogapp.services.interfaces.IBlogCategoryService;
@@ -24,26 +24,26 @@ public class BlogCategoryService implements IBlogCategoryService {
     }
 
     @Override
-    public List<ParentBlogCategory> getBlogCategories() {
+    public List<ParentCategory> getBlogCategories() {
         return parentBlogCategoryDao.findAll(
                 Sort.by(Sort.Direction.ASC, "label"));
     }
 
-    public List<ParentBlogCategory> getTrendingBlogCategories() {
+    public List<ParentCategory> getTrendingBlogCategories() {
         return parentBlogCategoryDao.findAll(
                 PageRequest.of(0, 10)).stream().toList();
     }
 
 
     @Override
-    public ParentBlogCategory getBlogCategoryById(Long theId) {
+    public ParentCategory getBlogCategoryById(Long theId) {
         return parentBlogCategoryDao.findById(theId).orElse(null);
     }
 
     @Override
-    public void addBlogCategory(ParentBlogCategory parentBlogCategory) {
-        if (!parentBlogCategoryDao.existsByLabel(parentBlogCategory.getLabel())) {
-            parentBlogCategoryDao.save(parentBlogCategory);
+    public void addBlogCategory(ParentCategory parentCategory) {
+        if (!parentBlogCategoryDao.existsByLabel(parentCategory.getLabel())) {
+            parentBlogCategoryDao.save(parentCategory);
         }
     }
 

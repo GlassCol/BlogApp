@@ -12,13 +12,14 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(uniqueConstraints = { @UniqueConstraint(name = "uniqueLabel", columnNames = {"parent_id", "label"})})
+@Table(name = "sub_categories",
+        uniqueConstraints = { @UniqueConstraint(name = "uniqueLabel", columnNames = {"parent_id", "label"})})
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class ChildBlogCategory {
+public class SubCategory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "child_category_id", nullable = false)
+    @Column(name = "sub_category_id", nullable = false)
     private Long id;
 
     @Column
@@ -27,6 +28,6 @@ public class ChildBlogCategory {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "parent_id", nullable = false)
     @ToString.Exclude
-    private ParentBlogCategory parent;
+    private ParentCategory parentCategory;
 
 }

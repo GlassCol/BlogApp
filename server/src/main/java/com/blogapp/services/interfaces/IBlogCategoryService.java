@@ -1,14 +1,14 @@
 package com.blogapp.services.interfaces;
 
-import com.blogapp.domains.ParentBlogCategory;
+import com.blogapp.domains.ParentCategory;
 import java.util.List;
 
 public interface IBlogCategoryService {
 
-    List<ParentBlogCategory> getBlogCategories();
-    List<ParentBlogCategory> getTrendingBlogCategories();
-    ParentBlogCategory getBlogCategoryById(Long theId);
-    void addBlogCategory(ParentBlogCategory parentBlogCategory);
+    List<ParentCategory> getBlogCategories();
+    List<ParentCategory> getTrendingBlogCategories();
+    ParentCategory getBlogCategoryById(Long theId);
+    void addBlogCategory(ParentCategory parentCategory);
     void deleteBlogCategoryById(Long theId);
 
 }

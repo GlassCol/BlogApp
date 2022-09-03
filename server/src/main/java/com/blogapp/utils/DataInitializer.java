@@ -49,13 +49,13 @@ public class DataInitializer {
 
 
         for (int i = 1; i < primaryCat.length; i++) {
-            ParentBlogCategory pBlogCategory = appContextUtil.getAppContext().getBean(ParentBlogCategory.class);
-            ChildBlogCategory cBlogA = appContextUtil.getAppContext().getBean(ChildBlogCategory.class);
-            ChildBlogCategory cBlogB = appContextUtil.getAppContext().getBean(ChildBlogCategory.class);
-            ChildBlogCategory cBlogC = appContextUtil.getAppContext().getBean(ChildBlogCategory.class);
-            ChildBlogCategory cBlogD = appContextUtil.getAppContext().getBean(ChildBlogCategory.class);
-            ChildBlogCategory cBlogE = appContextUtil.getAppContext().getBean(ChildBlogCategory.class);
-            ChildBlogCategory cBlogF = appContextUtil.getAppContext().getBean(ChildBlogCategory.class);
+            ParentCategory pBlogCategory = appContextUtil.getAppContext().getBean(ParentCategory.class);
+            SubCategory cBlogA = appContextUtil.getAppContext().getBean(SubCategory.class);
+            SubCategory cBlogB = appContextUtil.getAppContext().getBean(SubCategory.class);
+            SubCategory cBlogC = appContextUtil.getAppContext().getBean(SubCategory.class);
+            SubCategory cBlogD = appContextUtil.getAppContext().getBean(SubCategory.class);
+            SubCategory cBlogE = appContextUtil.getAppContext().getBean(SubCategory.class);
+            SubCategory cBlogF = appContextUtil.getAppContext().getBean(SubCategory.class);
 
             List<Integer> indexes = new ArrayList<>();
             while (indexes.size() < 6) {
@@ -75,14 +75,14 @@ public class DataInitializer {
             pBlogCategory.setLabel(primaryCat[i]);
             pBlogCategory.setPrimary(true);
 
-            cBlogA.setParent(pBlogCategory);
-            cBlogB.setParent(pBlogCategory);
-            cBlogC.setParent(pBlogCategory);
-            cBlogD.setParent(pBlogCategory);
-            cBlogE.setParent(pBlogCategory);
-            cBlogF.setParent(pBlogCategory);
+            cBlogA.setParentCategory(pBlogCategory);
+            cBlogB.setParentCategory(pBlogCategory);
+            cBlogC.setParentCategory(pBlogCategory);
+            cBlogD.setParentCategory(pBlogCategory);
+            cBlogE.setParentCategory(pBlogCategory);
+            cBlogF.setParentCategory(pBlogCategory);
 
-            List<ChildBlogCategory> cList = new ArrayList<>();
+            List<SubCategory> cList = new ArrayList<>();
             cList.add(cBlogA);
             cList.add(cBlogB);
             cList.add(cBlogC);
@@ -90,7 +90,7 @@ public class DataInitializer {
             cList.add(cBlogE);
             cList.add(cBlogF);
 
-            pBlogCategory.setChildCategories(cList);
+            pBlogCategory.setSubCategories(cList);
             if (!parentBlogCategoryDao.existsByLabel(pBlogCategory.getLabel())) {
                 System.out.println("...======================= exists" + pBlogCategory);
                 parentBlogCategoryDao.save(pBlogCategory);
