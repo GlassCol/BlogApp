@@ -5,7 +5,7 @@ import Footer from '../components/Footer'
 import { Banner } from '../components/banner/Banner'
 import { SidePanel } from '../components/panels/SidePanel'
 import PostCreator from '../components/postsandreplies/PostCreator'
-import Login from './Login'
+// import Login from './Login'
 
 const PostsAndReplies = () => {
   return (
@@ -13,7 +13,7 @@ const PostsAndReplies = () => {
       <section className='row'>
 
         <Header />
-          <Login />
+          {/* <Login /> */}
           <section className='container'>
             <div className='row'>
               <div className='d-flex flex-wrap justify-content-between'>
