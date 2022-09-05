@@ -123,7 +123,6 @@ public class PostController {
     }
 
     @PutMapping(path = "/")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Object> updatePost(@RequestBody PostDto postDto) {
         Post post = applicationContext.getBean(Post.class);
         post = post.mapDtoToPost(postDto);
@@ -140,7 +139,6 @@ public class PostController {
     }
 
     @DeleteMapping(path = "/")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Object> deletePostById(@PathVariable Long theId) {
         try {
             postService.deletePostById(theId);
