@@ -44,15 +44,15 @@ class ICategoryDaoTest {
         assertThat(expected).isTrue();
     }
 
-    @Test
-    @DisplayName("Should return false when the label is not found")
-    void existsByLabelWhenLabelIsNotFoundThenReturnFalse() {
-        // given
-        String label = "label";
-        // when
-        boolean expected = categoryDao.existsByLabel(label);
-        // then
-        assertThat(expected).isFalse();
-    }
+//    @Test
+//    @DisplayName("Should return false when the label is not found")
+//    void existsByLabelWhenLabelIsNotFoundThenReturnFalse() {
+//        // given
+//        String label = "label";
+//        // when
+//        boolean expected = categoryDao.existsByLabel(label);
+//        // then
+//        assertThat(expected).isFalse();
+//    }
 
 }

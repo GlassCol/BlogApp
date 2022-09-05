@@ -62,7 +62,7 @@ public class CategoryController {
 
     @PostMapping(path = {"/"}, consumes = {APPLICATION_JSON_VALUE})
     public ResponseEntity<Object> addCategory(@RequestBody CategoryDTO categoryDTO) {
-        // requires a plain pojo without annotations in order tor prevent injection - refactor with object mapper
+
         Category category = applicationContext.getBean(Category.class);
 
         category.setId(categoryDTO.getId());

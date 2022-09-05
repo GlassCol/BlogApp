@@ -49,9 +49,4 @@ public class BeanConfig {
         return new User();
     }
 
-//    @Bean
-//    CategoryService categoryService() {
-//        return new CategoryService();
-//    }
-
 }

@@ -14,7 +14,6 @@ import org.springframework.data.annotation.CreatedBy;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.List;
 
 @Entity
@@ -26,6 +25,14 @@ import java.util.List;
 @Table(name = "posts")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Post {
+
+    public Post(Long id, String title, String body, LocalDateTime updatedAt, LocalDateTime createdAt) {
+        this.id = id;
+        this.title = title;
+        this.body = body;
+        this.updatedAt = updatedAt;
+        this.createdAt = createdAt;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,14 +68,5 @@ public class Post {
     @JsonIncludeProperties(value = {"id", "username"})
     @CreatedBy
     private User user;
-
-    public Post mapDtoToPost(PostDto postDto) {
-        return new Post(
-                postDto.getId(), postDto.getTitle(), postDto.getBody(),
-                LocalDateTime.ofEpochSecond(50000,50000, ZoneOffset.UTC),
-                LocalDateTime.ofEpochSecond(50000,50000, ZoneOffset.UTC),
-                postDto.getComments(), postDto.getPhotos(), postDto.getUser()
-        );
-    }
 
 }

@@ -5,6 +5,7 @@ import com.blogapp.comment.domain.Comment;
 import com.blogapp.user.domain.User;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 public class PostDto {
@@ -88,4 +89,14 @@ public class PostDto {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public static Post mapPostDtoToPost(PostDto postDto) {
+        return new Post(
+                postDto.getId(), postDto.getTitle(), postDto.getBody(),
+                LocalDateTime.ofEpochSecond(50000,50000, ZoneOffset.UTC),
+                LocalDateTime.ofEpochSecond(50000,50000, ZoneOffset.UTC),
+                postDto.getComments(), postDto.getPhotos(), postDto.getUser()
+        );
+    }
+
 }

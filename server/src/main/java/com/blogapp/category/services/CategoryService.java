@@ -47,10 +47,10 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public boolean deleteCategoryById(Long theId) {
-        if (!categoryDao.existsById(theId)) {
-            return false;
+        if (categoryDao.existsById(theId)) {
+            categoryDao.deleteById(theId);
+            return true;
         }
-        categoryDao.deleteById(theId);
-        return true;
+        return false;
     }
 }
