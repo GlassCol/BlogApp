@@ -6,6 +6,8 @@
 
     <class name="com.blogapp.user.domain.User" table="tbl_users">
         <id name="id">
+            <!--  this causes an error and prevents startup b/c its expecting id's to manually assigned
+                    when creating user objects  -->
             <generator class="assigned"/>
         </id>
 <!--        <id name="id">-->
