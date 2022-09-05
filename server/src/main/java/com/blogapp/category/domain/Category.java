@@ -16,7 +16,13 @@ import java.util.List;
 @Table(name = "parent_categories",
         uniqueConstraints = { @UniqueConstraint(name = "parentLabel", columnNames = {"label"} )})
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class ParentCategory {
+public class Category {
+
+    public Category(Long id, String label, boolean isPrimary) {
+        this.id = id;
+        this.label = label;
+        this.isPrimary = isPrimary;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,7 +35,7 @@ public class ParentCategory {
     @Column(name = "is_primary")
     private boolean isPrimary;
 
-    @OneToMany(mappedBy = "parentCategory", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<SubCategory> subCategories;
 

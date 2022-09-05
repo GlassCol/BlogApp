@@ -28,6 +28,6 @@ public class SubCategory {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "parent_id", nullable = false)
     @ToString.Exclude
-    private ParentCategory parentCategory;
+    private Category category;
 
 }

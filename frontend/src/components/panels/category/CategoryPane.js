@@ -25,7 +25,7 @@ export const CategoryPane = ( {id, label, subCategories}) => {
 
                     <ul className="accordion-body m-auto p-2">
                         <ul className='nav flex-column'>
-                            { subCategories.map((child) => {
+                            { subCategories?.map((child) => {
                                 return <li className='nav-item border-0' 
                                             key={child.id}>
                                             <small>{child.label}</small>

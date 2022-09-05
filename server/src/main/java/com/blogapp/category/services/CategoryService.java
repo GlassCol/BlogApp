@@ -1,49 +1,55 @@
 package com.blogapp.category.services;
 
-import com.blogapp.category.domain.ParentCategory;
-import com.blogapp.category.repositories.IParentCategoryRepository;
+import com.blogapp.category.domain.Category;
+import com.blogapp.category.repositories.ICategoryDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 
 @Service
 public class CategoryService implements ICategoryService {
 
-    private final IParentCategoryRepository parentCategoryRepository;
+    private final ICategoryDao categoryDao;
 
     @Autowired
-    CategoryService(IParentCategoryRepository parentCategoryRepository) {
-        this.parentCategoryRepository = parentCategoryRepository;
+    public CategoryService(ICategoryDao categoryDao) {
+        this.categoryDao = categoryDao;
     }
 
     @Override
-    public List<ParentCategory> getParentCategories() {
-        return parentCategoryRepository.findAll(
-                Sort.by(Sort.Direction.ASC, "label"));
+    public List<Category> getCategories() {
+        return categoryDao.findAll(Sort.by(Sort.Direction.ASC, "label"));
     }
 
-    public List<ParentCategory> getTrendingCategories() {
-        return parentCategoryRepository.findAll(
-                PageRequest.of(0, 10)).stream().toList();
-    }
-
-    @Override
-    public ParentCategory getParentCategoryById(Long theId) {
-        return parentCategoryRepository.findById(theId).orElse(null);
+    public List<Category> getTrendingCategories() {
+        return categoryDao.findAll(PageRequest.of(0, 10)).toList();
     }
 
     @Override
-    public void addParentCategory(ParentCategory parentCategory) {
-        if (!parentCategoryRepository.existsByLabel(parentCategory.getLabel())) {
-            parentCategoryRepository.save(parentCategory);
+    public Optional<Category> getCategoryById(Long theId) {
+        return categoryDao.findById(theId);
+    }
+
+    @Override
+    public boolean addCategory(Category category) {
+        if (categoryDao.existsByLabel(category.getLabel())) {
+            return false;
         }
+        categoryDao.save(category);
+        return true;
     }
 
     @Override
-    public void deleteParentCategoryById(Long theId) {
-        parentCategoryRepository.deleteById(theId);
+    public boolean deleteCategoryById(Long theId) {
+        if (!categoryDao.existsById(theId)) {
+            return false;
+        }
+        categoryDao.deleteById(theId);
+        return true;
     }
 }

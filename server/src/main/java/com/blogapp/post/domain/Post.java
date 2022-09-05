@@ -58,7 +58,7 @@ public class Post {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id", nullable = true)
     @ToString.Exclude
-    @JsonIncludeProperties(value = {"id"})
+    @JsonIncludeProperties(value = {"id", "username"})
     @CreatedBy
     private User user;
 

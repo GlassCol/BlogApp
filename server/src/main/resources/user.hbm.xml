@@ -8,6 +8,9 @@
         <id name="id">
             <generator class="assigned"/>
         </id>
+<!--        <id name="id">-->
+<!--            <generator class="native"/>-->
+<!--        </id>-->
         <property name="username"/>
         <property name="authToken"/>
         <property name="firstName"/>

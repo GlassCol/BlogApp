@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 
+const jsonData = { data: [] }
 
 // fetch the resource at the passed in url
 export const useApiResources = (resourceUrl) => {
@@ -8,8 +9,12 @@ export const useApiResources = (resourceUrl) => {
 
     useEffect(() => {
         fetchResource();
+
+        return () => {
+            // console.log('clean up here, e.g. subscribe or unsubscribe here ...')
+        }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [resourceUrl] )
+    }, [] )
 
 
     const fetchResource = () => {
@@ -17,7 +22,7 @@ export const useApiResources = (resourceUrl) => {
         fetch(`http://localhost:8081/${resourceUrl}`)
             .then(response => response.json())
             .then(data => {
-                console.log(data.data);
+                console.log(`GET: ${resourceUrl}`);
                 setResource(data.data);
                 setLoading(false);
             })

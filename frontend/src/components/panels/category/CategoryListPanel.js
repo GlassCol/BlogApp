@@ -7,13 +7,13 @@ export const CategoryListPanel = () => {
 
     return (
         <>
-            <article className='card border border-0 w-100'>
+            <article className='card border border-0 mt-3 w-100'>
                 <dl className='card-body'>
                     <dt className='card-title text-dark' > CATEGORIES ... </dt>
                     <section className='accordion accordion-flush ' id='accordionParent'>
                           
                         {loading ? <div> ... loading</div> :
-                            categories.map((category) => {
+                            categories?.map((category) => {
                                 return <CategoryPane key={category.id} 
                                     id={category.id}
                                     label={category.label}

@@ -1,9 +1,9 @@
 package com.blogapp.utils;
 
 
-import com.blogapp.category.repositories.ISubCategoryRepository;
-import com.blogapp.category.repositories.IParentCategoryRepository;
-import com.blogapp.category.domain.ParentCategory;
+import com.blogapp.category.repositories.ISubCategoryDao;
+import com.blogapp.category.repositories.ICategoryDao;
+import com.blogapp.category.domain.Category;
 import com.blogapp.category.domain.SubCategory;
 import com.blogapp.comment.domain.Comment;
 import com.blogapp.comment.repositories.ICommentDao;
@@ -22,8 +22,8 @@ import java.util.List;
 @Component
 public class DataInitializer {
 
-    private final IParentCategoryRepository parentBlogCategoryDao;
-    private final ISubCategoryRepository childBlogCategoryDao;
+    private final ICategoryDao parentCategoryDao;
+    private final ISubCategoryDao subCategoryDao;
     private final IPostDao postDao;
     private final IUserDao userDao;
     private final ICommentDao commentDao;
@@ -31,15 +31,15 @@ public class DataInitializer {
     private final AppContextUtil appContextUtil;
 
     @Autowired
-    public DataInitializer(IParentCategoryRepository parentBlogCategoryDao,
-                           ISubCategoryRepository childBlogCategoryDao,
+    public DataInitializer(ICategoryDao parentCategoryDao,
+                           ISubCategoryDao subCategoryDao,
                            IPostDao postDao,
                            IUserDao userDao,
                            ICommentDao commentDao,
                            IPhotoDao photoDao,
                            AppContextUtil appContextUtil) {
-        this.parentBlogCategoryDao = parentBlogCategoryDao;
-        this.childBlogCategoryDao = childBlogCategoryDao;
+        this.parentCategoryDao = parentCategoryDao;
+        this.subCategoryDao = subCategoryDao;
         this.postDao = postDao;
         this.userDao = userDao;
         this.commentDao = commentDao;
@@ -59,7 +59,7 @@ public class DataInitializer {
 
 
         for (int i = 1; i < primaryCat.length; i++) {
-            ParentCategory pBlogCategory = appContextUtil.getAppContext().getBean(ParentCategory.class);
+            Category pBlogCategory = appContextUtil.getAppContext().getBean(Category.class);
             SubCategory cBlogA = appContextUtil.getAppContext().getBean(SubCategory.class);
             SubCategory cBlogB = appContextUtil.getAppContext().getBean(SubCategory.class);
             SubCategory cBlogC = appContextUtil.getAppContext().getBean(SubCategory.class);
@@ -85,12 +85,12 @@ public class DataInitializer {
             pBlogCategory.setLabel(primaryCat[i]);
             pBlogCategory.setPrimary(true);
 
-            cBlogA.setParentCategory(pBlogCategory);
-            cBlogB.setParentCategory(pBlogCategory);
-            cBlogC.setParentCategory(pBlogCategory);
-            cBlogD.setParentCategory(pBlogCategory);
-            cBlogE.setParentCategory(pBlogCategory);
-            cBlogF.setParentCategory(pBlogCategory);
+            cBlogA.setCategory(pBlogCategory);
+            cBlogB.setCategory(pBlogCategory);
+            cBlogC.setCategory(pBlogCategory);
+            cBlogD.setCategory(pBlogCategory);
+            cBlogE.setCategory(pBlogCategory);
+            cBlogF.setCategory(pBlogCategory);
 
             List<SubCategory> cList = new ArrayList<>();
             cList.add(cBlogA);
@@ -101,15 +101,15 @@ public class DataInitializer {
             cList.add(cBlogF);
 
             pBlogCategory.setSubCategories(cList);
-            if (!parentBlogCategoryDao.existsByLabel(pBlogCategory.getLabel())) {
+            if (parentCategoryDao.existsByLabel(pBlogCategory.getLabel())) {
                 System.out.println("...======================= exists" + pBlogCategory);
-                parentBlogCategoryDao.save(pBlogCategory);
-                childBlogCategoryDao.save(cBlogA);
-                childBlogCategoryDao.save(cBlogB);
-                childBlogCategoryDao.save(cBlogC);
-                childBlogCategoryDao.save(cBlogD);
-                childBlogCategoryDao.save(cBlogE);
-                childBlogCategoryDao.save(cBlogF);
+                parentCategoryDao.save(pBlogCategory);
+                subCategoryDao.save(cBlogA);
+                subCategoryDao.save(cBlogB);
+                subCategoryDao.save(cBlogC);
+                subCategoryDao.save(cBlogD);
+                subCategoryDao.save(cBlogE);
+                subCategoryDao.save(cBlogF);
             }
 
         }
@@ -145,7 +145,7 @@ public class DataInitializer {
         String[] titles = new String[] {"nesciunt", "eum", "et est occaecati", "qui est esse", "magnam facilis autem", "dolorem doore est ipsam",
                 "facilis pskas", "jsjalkks oiuoiewjiod"};
         int[] imageNums = new int[]{315, 361, 596, 603, 300, 788, 283, 663, 900, 434, 800, 333, 122, 483,
-        898, 292, 748, 574, 390, 695, 233};
+        898, 292, 777, 574, 390, 695, 233};
 
         Photo photo = appContextUtil.getAppContext().getBean(Photo.class);
 //        int imgNum = (int) (Math.random() * 1000);
@@ -171,7 +171,11 @@ public class DataInitializer {
             // set objects to the post object
             post.setUser(user);
             post.setTitle(titles[i]);
-            post.setBody(body[i]);
+            String bodyString = "";
+            for (int k = 0; k < 8; k++) {
+                bodyString += " " + body[k];
+            }
+            post.setBody(bodyString);
 
             // save the post
             postDao.save(post);

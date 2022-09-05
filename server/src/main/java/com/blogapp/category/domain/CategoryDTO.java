@@ -1,7 +1,7 @@
 package com.blogapp.category.domain;
 import java.util.List;
 
-public class ParentCategoryDTO {
+public class CategoryDTO {
 
     private Long id;
     private String label;

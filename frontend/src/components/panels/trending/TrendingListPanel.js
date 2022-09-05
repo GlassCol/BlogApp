@@ -12,7 +12,7 @@ export const TrendingListPanel = () => {
                     <dt className='card-title text-dark' > TRENDING ...</dt>
                     <ul className='nav d-flex flex-wrap justify-content-evenly '>
                         {loading ? <div> ... loading </div> :
-                          trending.map(trend => {
+                          trending?.map(trend => {
                                 return <li key={trend.id} className='nav-item border m-1 p-1'>
                                             <small>{trend.label}</small>
                                         </li>

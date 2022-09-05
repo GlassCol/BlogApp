@@ -7,7 +7,7 @@ export const Banner = () => {
     return (
         <>
             {loading ? <div> ... loading </div> :
-                photos.map(photo => {
+                photos?.map(photo => {
                     return (
                     <img key={photo.id} 
                         className="mx-auto d-block rounded shadow bg-body p-3 m-3" 

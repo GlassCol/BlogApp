@@ -1,6 +1,6 @@
 package com.blogapp;
 
-import com.blogapp.category.domain.ParentCategory;
+import com.blogapp.category.domain.Category;
 import com.blogapp.category.domain.SubCategory;
 import com.blogapp.comment.domain.Comment;
 import com.blogapp.photo.domain.Photo;
@@ -15,13 +15,13 @@ public class BeanConfig {
 
     @Bean
     @Scope(scopeName = "prototype")
-    ParentCategory parentBlogCategory() {
-        return new ParentCategory();
+    Category parentCategory() {
+        return new Category();
     }
 
     @Bean
     @Scope(scopeName = "prototype")
-    SubCategory childBlogCategory() {
+    SubCategory subCategory() {
         return new SubCategory();
     }
 
@@ -48,5 +48,10 @@ public class BeanConfig {
     User user() {
         return new User();
     }
+
+//    @Bean
+//    CategoryService categoryService() {
+//        return new CategoryService();
+//    }
 
 }

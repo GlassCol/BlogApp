@@ -1,8 +1,8 @@
 package com.blogapp.category;
 
 import com.blogapp.ResponseHandler;
-import com.blogapp.category.domain.ParentCategory;
-import com.blogapp.category.domain.ParentCategoryDTO;
+import com.blogapp.category.domain.Category;
+import com.blogapp.category.domain.CategoryDTO;
 import com.blogapp.category.services.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -31,8 +31,8 @@ public class CategoryController {
 
     @GetMapping({"", "/"})
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Object> getParentCategories() {
-        List<ParentCategory> categories = categoryService.getParentCategories();
+    public ResponseEntity<Object> getCategories() {
+        List<Category> categories = categoryService.getCategories();
 
         if (categories.isEmpty()) {
             return ResponseHandler.response(null, HttpStatus.NO_CONTENT, "No categories found");
@@ -43,7 +43,7 @@ public class CategoryController {
     @GetMapping("/trending")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Object> getTrending() {
-        List<ParentCategory> trending = categoryService.getTrendingCategories();
+        List<Category> trending = categoryService.getTrendingCategories();
 
         if (trending.isEmpty()) {
             return ResponseHandler.response(null, HttpStatus.NO_CONTENT, "No trending categories found");
@@ -54,35 +54,40 @@ public class CategoryController {
 
     @GetMapping("/{theId}")
     @ResponseStatus(HttpStatus.OK)
-    public  ResponseEntity<Object> getParentCategoryById(@PathVariable("theId") Long theId) {
-        ParentCategory parentCategory = categoryService.getParentCategoryById(theId);
+    public  ResponseEntity<Object> getCategoryById(@PathVariable("theId") Long theId) {
+        Optional<Category> category = categoryService.getCategoryById(theId);
 
-        if (Objects.isNull(parentCategory)) {
-            return ResponseHandler.response(null, HttpStatus.NOT_FOUND, "Category not found");
+        if (category.isPresent()) {
+            return ResponseHandler.response(category, HttpStatus.OK);
         }
-        return ResponseHandler.response(parentCategory, HttpStatus.OK);
+        return ResponseHandler.response(null, HttpStatus.NOT_FOUND, "Category not found");
     }
 
     @PostMapping(path = {"/"}, consumes = {APPLICATION_JSON_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Object> addParentCategory(@RequestBody ParentCategoryDTO parentCategoryDTO) {
-        // requires a plain pojo without annotations in order tor prevent injection
-        ParentCategory parentCategory = applicationContext.getBean(ParentCategory.class);
+    public ResponseEntity<Object> addCategory(@RequestBody CategoryDTO categoryDTO) {
+        // requires a plain pojo without annotations in order tor prevent injection - refactor with object mapper
+        Category category = applicationContext.getBean(Category.class);
 
-        parentCategory.setId(parentCategoryDTO.getId());
-        parentCategory.setLabel(parentCategoryDTO.getLabel());
-        parentCategory.setSubCategories(parentCategoryDTO.getSubCategories());
-        categoryService.addParentCategory(parentCategory);
+        category.setId(categoryDTO.getId());
+        category.setLabel(categoryDTO.getLabel());
+        category.setSubCategories(categoryDTO.getSubCategories());
 
-        return ResponseHandler.response(parentCategory, HttpStatus.OK);
+        // add the category
+        if (categoryService.addCategory(category)) {
+            return ResponseHandler.response(category, HttpStatus.OK);
+        }
+        return ResponseHandler.response(null, HttpStatus.CONFLICT, HttpStatus.CONFLICT.getReasonPhrase());
 
     }
 
     @DeleteMapping("/{theId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseEntity<Object> deleteParentCategoryById(@PathVariable Long theId) {
-        categoryService.deleteParentCategoryById(theId);
+    public ResponseEntity<Object> deleteCategoryById(@PathVariable Long theId) {
 
+        if (categoryService.deleteCategoryById(theId)) {
+            return ResponseHandler.response(null, HttpStatus.OK);
+        }
         return ResponseHandler.response(null, HttpStatus.NOT_MODIFIED, "Resource not deleted");
     }
 

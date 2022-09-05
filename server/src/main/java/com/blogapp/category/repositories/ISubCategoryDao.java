@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ISubCategoryRepository extends JpaRepository<SubCategory, Long> {
+public interface ISubCategoryDao extends JpaRepository<SubCategory, Long> {
 }

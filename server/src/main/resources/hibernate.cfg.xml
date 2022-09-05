@@ -14,6 +14,6 @@
         <property name="show_sql">true</property>
         <property name="format_sql">true</property>
         <property name="connection.pool_size">3</property>
-        <mapping resource="user.hbm.xml" />
+<!--        <mapping resource="user.hbm.xml" />-->
     </session-factory>
 </hibernate-configuration>

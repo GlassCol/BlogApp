@@ -1,14 +1,15 @@
 package com.blogapp.category.services;
 
-import com.blogapp.category.domain.ParentCategory;
+import com.blogapp.category.domain.Category;
 import java.util.List;
+import java.util.Optional;
 
 public interface ICategoryService {
 
-    List<ParentCategory> getParentCategories();
-    List<ParentCategory> getTrendingCategories();
-    ParentCategory getParentCategoryById(Long theId);
-    void addParentCategory(ParentCategory parentCategory);
-    void deleteParentCategoryById(Long theId);
+    List<Category> getCategories();
+    List<Category> getTrendingCategories();
+    Optional<Category> getCategoryById(Long theId);
+    boolean addCategory(Category category);
+    boolean deleteCategoryById(Long theId);
 
 }

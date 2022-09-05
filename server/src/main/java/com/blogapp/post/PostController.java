@@ -74,7 +74,17 @@ public class PostController {
 
     @GetMapping(path = "/photos")
     public ResponseEntity<Object> getPostPhotos() {
-        List<Photo> photos = photoService.getPhotos().subList(0, 4);
+        List<Photo> photos = photoService.getPhotos();
+
+        // temp implementation to get a random photo
+        int endRange = 0;
+        while (endRange < 4) {
+            int temp = (int) (Math.random() * photos.size());
+            if (temp >= 4) {
+                endRange = temp;
+            }
+        }
+        photos = photos.subList(endRange - 4, endRange);
 
         if (photos.isEmpty()) {
             log.info("No photos found");
