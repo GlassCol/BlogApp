@@ -30,7 +30,6 @@ public class CategoryController {
     }
 
     @GetMapping({"", "/"})
-    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Object> getCategories() {
         List<Category> categories = categoryService.getCategories();
 
@@ -41,7 +40,6 @@ public class CategoryController {
     }
 
     @GetMapping("/trending")
-    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Object> getTrending() {
         List<Category> trending = categoryService.getTrendingCategories();
 
@@ -53,7 +51,6 @@ public class CategoryController {
 
 
     @GetMapping("/{theId}")
-    @ResponseStatus(HttpStatus.OK)
     public  ResponseEntity<Object> getCategoryById(@PathVariable("theId") Long theId) {
         Optional<Category> category = categoryService.getCategoryById(theId);
 
@@ -64,7 +61,6 @@ public class CategoryController {
     }
 
     @PostMapping(path = {"/"}, consumes = {APPLICATION_JSON_VALUE})
-    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Object> addCategory(@RequestBody CategoryDTO categoryDTO) {
         // requires a plain pojo without annotations in order tor prevent injection - refactor with object mapper
         Category category = applicationContext.getBean(Category.class);
@@ -82,7 +78,6 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{theId}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Object> deleteCategoryById(@PathVariable Long theId) {
 
         if (categoryService.deleteCategoryById(theId)) {

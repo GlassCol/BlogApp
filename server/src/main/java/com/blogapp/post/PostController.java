@@ -79,12 +79,12 @@ public class PostController {
         // temp implementation to get a random photo
         int endRange = 0;
         while (endRange < 4) {
-            int temp = (int) (Math.random() * photos.size());
-            if (temp >= 4) {
-                endRange = temp;
+            int end = (int) (Math.random() * photos.size());
+            if (end >= 4) {
+                endRange = end;
             }
         }
-        photos = photos.subList(endRange - 4, endRange);
+        photos = photos.subList(endRange - 5, endRange);
 
         if (photos.isEmpty()) {
             log.info("No photos found");

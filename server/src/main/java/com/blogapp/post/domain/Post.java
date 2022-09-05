@@ -56,7 +56,7 @@ public class Post {
     private List<Photo> photos;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "user_id", nullable = true)
+    @JoinColumn(name = "users_id", nullable = true)
     @ToString.Exclude
     @JsonIncludeProperties(value = {"id", "username"})
     @CreatedBy

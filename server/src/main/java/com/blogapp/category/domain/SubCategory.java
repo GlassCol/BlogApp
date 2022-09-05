@@ -13,7 +13,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "sub_categories",
-        uniqueConstraints = { @UniqueConstraint(name = "uniqueLabel", columnNames = {"parent_id", "label"})})
+        uniqueConstraints = { @UniqueConstraint(name = "uniqueLabel", columnNames = {"category_id", "label"})})
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class SubCategory {
 
@@ -22,11 +22,11 @@ public class SubCategory {
     @Column(name = "sub_category_id", nullable = false)
     private Long id;
 
-    @Column
+    @Column(name = "label")
     private String label;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "parent_id", nullable = false)
+    @JoinColumn(name = "category_id", nullable = false)
     @ToString.Exclude
     private Category category;
 

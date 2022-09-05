@@ -26,6 +26,7 @@ public class CategoryService implements ICategoryService {
         return categoryDao.findAll(Sort.by(Sort.Direction.ASC, "label"));
     }
 
+    @Override
     public List<Category> getTrendingCategories() {
         return categoryDao.findAll(PageRequest.of(0, 10)).toList();
     }

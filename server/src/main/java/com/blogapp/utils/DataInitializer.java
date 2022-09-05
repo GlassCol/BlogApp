@@ -22,7 +22,7 @@ import java.util.List;
 @Component
 public class DataInitializer {
 
-    private final ICategoryDao parentCategoryDao;
+    private final ICategoryDao categoryDao;
     private final ISubCategoryDao subCategoryDao;
     private final IPostDao postDao;
     private final IUserDao userDao;
@@ -31,14 +31,14 @@ public class DataInitializer {
     private final AppContextUtil appContextUtil;
 
     @Autowired
-    public DataInitializer(ICategoryDao parentCategoryDao,
+    public DataInitializer(ICategoryDao categoryDao,
                            ISubCategoryDao subCategoryDao,
                            IPostDao postDao,
                            IUserDao userDao,
                            ICommentDao commentDao,
                            IPhotoDao photoDao,
                            AppContextUtil appContextUtil) {
-        this.parentCategoryDao = parentCategoryDao;
+        this.categoryDao = categoryDao;
         this.subCategoryDao = subCategoryDao;
         this.postDao = postDao;
         this.userDao = userDao;
@@ -101,9 +101,9 @@ public class DataInitializer {
             cList.add(cBlogF);
 
             pBlogCategory.setSubCategories(cList);
-            if (parentCategoryDao.existsByLabel(pBlogCategory.getLabel())) {
+            if (!categoryDao.existsByLabel(pBlogCategory.getLabel())) {
                 System.out.println("...======================= exists" + pBlogCategory);
-                parentCategoryDao.save(pBlogCategory);
+                categoryDao.save(pBlogCategory);
                 subCategoryDao.save(cBlogA);
                 subCategoryDao.save(cBlogB);
                 subCategoryDao.save(cBlogC);
@@ -144,7 +144,7 @@ public class DataInitializer {
 
         String[] titles = new String[] {"nesciunt", "eum", "et est occaecati", "qui est esse", "magnam facilis autem", "dolorem doore est ipsam",
                 "facilis pskas", "jsjalkks oiuoiewjiod"};
-        int[] imageNums = new int[]{315, 361, 596, 603, 300, 788, 283, 663, 900, 434, 800, 333, 122, 483,
+        int[] imageNums = new int[]{315, 361, 596, 603, 300, 788, 283, 663, 900, 434, 800, 330, 122, 483,
         898, 292, 777, 574, 390, 695, 233};
 
         Photo photo = appContextUtil.getAppContext().getBean(Photo.class);

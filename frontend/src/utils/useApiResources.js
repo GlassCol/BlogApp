@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 
-const jsonData = { data: [] }
 
 // fetch the resource at the passed in url
 export const useApiResources = (resourceUrl) => {

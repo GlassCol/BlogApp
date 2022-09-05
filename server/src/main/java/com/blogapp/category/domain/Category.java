@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "parent_categories",
+@Table(name = "categories",
         uniqueConstraints = { @UniqueConstraint(name = "parentLabel", columnNames = {"label"} )})
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Category {
@@ -26,10 +26,10 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "parent_category_id")
+    @Column(name = "category_id")
     private Long id;
 
-    @Column
+    @Column(name = "label")
     private String label;
 
     @Column(name = "is_primary")

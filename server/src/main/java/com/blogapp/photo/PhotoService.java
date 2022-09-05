@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class PhotoService implements IPhotoService {
 
-    private IPhotoDao photoDao;
+    private final IPhotoDao photoDao;
 
     @Autowired
     PhotoService(IPhotoDao photoDao) {
