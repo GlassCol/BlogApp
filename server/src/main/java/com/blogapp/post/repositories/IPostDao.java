@@ -9,5 +9,4 @@ import java.util.List;
 @Repository
 public interface IPostDao extends JpaRepository<Post, Long> {
     List<Post> findByUserId(Long theId);
-//    List<Post> findByCategoryId(Long theId);
 }

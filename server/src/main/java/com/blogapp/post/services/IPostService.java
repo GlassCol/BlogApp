@@ -11,9 +11,7 @@ public interface IPostService {
 
     List<Post> getPostsByUserId(Long theId);
 
-//    List<Post> getPostsByCategoryId(Long theId);
-
-    Post getPostById(Long theId);
+    Optional<Post> getPostById(Long theId);
 
     Optional<Post> addPost(Post post);
 

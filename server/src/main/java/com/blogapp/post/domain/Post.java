@@ -34,6 +34,15 @@ public class Post {
         this.createdAt = createdAt;
     }
 
+    public Post(Long id, String title, String body, LocalDateTime updatedAt, LocalDateTime createdAt, User user) {
+        this.id = id;
+        this.title = title;
+        this.body = body;
+        this.updatedAt = updatedAt;
+        this.createdAt = createdAt;
+        this.user = user;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -54,11 +63,11 @@ public class Post {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Comment> comments;
 
-    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Photo> photos;
 

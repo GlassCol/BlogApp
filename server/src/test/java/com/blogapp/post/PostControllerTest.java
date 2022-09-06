@@ -1,11 +1,11 @@
 package com.blogapp.post;
 
 import com.blogapp.photo.domain.Photo;
+import com.blogapp.photo.domain.PhotoDTO;
 import com.blogapp.photo.services.IPhotoService;
 import com.blogapp.post.domain.Post;
 import com.blogapp.post.domain.PostDto;
 import com.blogapp.post.services.IPostService;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,6 +36,7 @@ class PostControllerTest {
     @InjectMocks
     private PostController postController;
 
+    // TEST GETS POSTS BY THE CATEGORY ID
 
     // TEST GET POSTS ALL
     @Test
@@ -94,36 +95,6 @@ class PostControllerTest {
         assertNotNull(response.getBody());
     }
 
-    // TEST GETS POSTS BY THE CATEGORY ID
-//    @Test
-//    @DisplayName("Should return a list of posts when the category id is valid")
-//    @Disabled
-//    void getPostsByCategoryIdWhenCategoryIdIsValidThenReturnListOfPosts() {
-//        Post post = new Post();
-//        post.setId(1L);
-//        post.setTitle("title");
-//        post.setBody("body");
-//
-//        when(postService.getPostsByCategoryId(any())).thenReturn(List.of(post));
-//
-//        ResponseEntity<Object> response = postController.getPostsByCategoryId(1L);
-//
-//        assertEquals(HttpStatus.OK, response.getStatusCode());
-//        assertNotNull(response.getBody());
-//    }
-//
-//    @Test
-//    @DisplayName("Should return an empty list when the category id is invalid")
-//    @Disabled
-//    void getPostsByCategoryIdWhenCategoryIdIsInvalidThenReturnEmptyList() {
-//        when(postService.getPostsByCategoryId(any())).thenReturn(List.of());
-//
-//        ResponseEntity<Object> response = postController.getPostsByCategoryId(1L);
-//
-//        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-//        assertNotNull(response.getBody());
-//    }
-
     // TEST GET PHOTOS
     @Test
     @DisplayName("Should return a list of photos when there are photos in the database")
@@ -156,7 +127,7 @@ class PostControllerTest {
         post.setTitle("title");
         post.setBody("body");
 
-        when(postService.getPostById(any())).thenReturn(post);
+        when(postService.getPostById(any())).thenReturn(Optional.of(post));
 
         ResponseEntity<Object> response = postController.getPostsById(1L);
 
@@ -173,20 +144,21 @@ class PostControllerTest {
     }
 
     // TEST ADD POST
+
     @Test
-    @DisplayName("Should save the post when the post is valid")
-    void addPostWhenPostIsValid() {
+    @DisplayName("Should return a 201 status code when the post is successfully created")
+    void addPostWhenPostIsSuccessfullyCreatedThenReturn201() {
         PostDto postDto = new PostDto();
         postDto.setId(1L);
         postDto.setTitle("title");
         postDto.setBody("body");
+        postDto.setUsername("username");
 
-        Post post = new Post();
-        post.setId(1L);
-        post.setTitle("title");
-        post.setBody("body");
+        Post post = PostDto.mapPostDtoToPost(postDto);
+        Photo photo = PhotoDTO.mapPostDtoToPhoto(postDto);
 
-        when(postService.addPost(any(Post.class))).thenReturn(Optional.of(post));
+        when(postService.addPost(any())).thenReturn(Optional.of(post));
+        when(photoService.addPhoto(any())).thenReturn(Optional.of(photo));
 
         ResponseEntity<Object> response = postController.addPost(postDto);
 
@@ -194,12 +166,23 @@ class PostControllerTest {
     }
 
     @Test
-    @DisplayName("Should throw an exception when the post is invalid")
-    void addPostWhenPostIsInvalidThenThrowException() {
+    @DisplayName("Should return a 403 status code when the user is not authorized")
+    void addPostWhenUserIsNotAuthorizedThenReturn403() {
         PostDto postDto = new PostDto();
-        postDto.setId(1L);
-        postDto.setTitle("title");
-        postDto.setBody("body");
+        postDto.setUsername("test");
+
+        when(postService.addPost(any(Post.class))).thenReturn(Optional.empty());
+
+        ResponseEntity<Object> response = postController.addPost(postDto);
+
+        assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
+    }
+
+    @Test
+    @DisplayName("Should return a 409 status code when the user is not found")
+    void addPostWhenUserIsNotFoundThenReturn409() {
+        PostDto postDto = new PostDto();
+        postDto.setUsername("username");
 
         when(postService.addPost(any(Post.class))).thenReturn(Optional.empty());
 
@@ -207,6 +190,9 @@ class PostControllerTest {
 
         assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
     }
+
+
+
 
     // TEST UPDATE POST
     @Test
@@ -272,5 +258,4 @@ class PostControllerTest {
         assertEquals(HttpStatus.NOT_MODIFIED, response.getStatusCode());
         assertNotNull(response.getBody());
     }
-
 }

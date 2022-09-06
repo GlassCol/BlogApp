@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "categories",
-        uniqueConstraints = { @UniqueConstraint(name = "parentLabel", columnNames = {"label"} )})
+        uniqueConstraints = { @UniqueConstraint(name = "parentLabel", columnNames = {"label"}) })
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Category {
 

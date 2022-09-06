@@ -50,4 +50,11 @@ public class Photo {
     @JsonIncludeProperties(value = {"id"})
     private Post post;
 
+    public Photo(String imageUrl, String title, String imageType, LocalDateTime now, LocalDateTime now1) {
+        this.imageUrl = imageUrl;
+        this.title = title;
+        this.imageType = imageType;
+        this.createdAt = now;
+        this.updatedAt = now;
+    }
 }

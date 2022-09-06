@@ -16,7 +16,7 @@ import java.util.Optional;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping(path = {"/categories"}, produces = APPLICATION_JSON_VALUE)
 public class CategoryController {
 
@@ -48,7 +48,6 @@ public class CategoryController {
         }
         return ResponseHandler.response(trending, HttpStatus.OK);
     }
-
 
     @GetMapping("/{theId}")
     public  ResponseEntity<Object> getCategoryById(@PathVariable("theId") Long theId) {

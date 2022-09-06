@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PhotoService implements IPhotoService {
@@ -21,6 +22,11 @@ public class PhotoService implements IPhotoService {
     @Override
     public List<Photo> getPhotos() {
         return photoDao.findAll();
+    }
+
+    @Override
+    public Optional<Photo> addPhoto(Photo photo) {
+        return Optional.of(photoDao.save(photo));
     }
 
 }

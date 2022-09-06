@@ -2,11 +2,13 @@ package com.blogapp.post.services;
 
 import com.blogapp.post.domain.Post;
 import com.blogapp.post.repositories.IPostDao;
+import com.blogapp.user.domain.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.persistence.EntityExistsException;
@@ -16,6 +18,7 @@ import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
@@ -84,42 +87,14 @@ class PostServiceTest {
     }
 
     // TEST GET POST BY CATEGORY ID
-//    @Test
-//    @DisplayName("Should return posts when the category exists")
-//    void getPostsByCategoryIdWhenCategoryExistsThenReturnPosts() {
-//        Post post =
-//                new Post(
-//                        1L,
-//                        "title",
-//                        "body",
-//                        LocalDateTime.ofEpochSecond(50000, 50000, ZoneOffset.UTC),
-//                        LocalDateTime.ofEpochSecond(50000, 50000, ZoneOffset.UTC),
-//                        null,
-//                        null,
-//                        null);
-//        when(postDao.findByCategoryId(anyLong())).thenReturn(List.of(post));
-//
-//        List<Post> posts = postService.getPostsByCategoryId(1L);
-//
-//        assertEquals(1, posts.size());
-//        assertEquals("title", posts.get(0).getTitle());
-//        assertEquals("body", posts.get(0).getBody());
-//    }
-//
-//    @Test
-//    @DisplayName("Should throw an exception when the category does not exist")
-//    void getPostsByCategoryIdWhenCategoryDoesNotExistThenThrowException() {
-//        when(postDao.findByCategoryId(anyLong())).thenReturn(List.of());
-//        assertThrows(EntityNotFoundException.class, () -> postService.getPostsByCategoryId(1L));
-//    }
 
     // TEST GET POST BY ID
     @Test
     @DisplayName("Should return null when the post is not found")
     void getPostByIdWhenPostIsNotFoundThenReturnNull() {
         when(postDao.findById(anyLong())).thenReturn(Optional.empty());
-        Post post = postService.getPostById(1L);
-        assertNull(post);
+        Optional<Post> post = postService.getPostById(1L);
+        assertTrue(post.isEmpty());
     }
 
     @Test
@@ -130,54 +105,34 @@ class PostServiceTest {
                         1L,
                         "title",
                         "body",
-                        LocalDateTime.ofEpochSecond(50000, 50000, ZoneOffset.UTC),
-                        LocalDateTime.ofEpochSecond(50000, 50000, ZoneOffset.UTC),
+                        LocalDateTime.now(),
+                        LocalDateTime.now(),
                         null,
                         null,
                         null);
         when(postDao.findById(anyLong())).thenReturn(Optional.of(post));
 
-        Post foundPost = postService.getPostById(1L);
+        Optional<Post> foundPost = postService.getPostById(1L);
 
-        assertEquals(post, foundPost);
+        assertEquals(post, foundPost.get());
     }
 
     // TEST ADD POST
     @Test
     @DisplayName("Should save the post when the id is not taken")
     void addPostWhenIdIsNotTaken() {
-        Post post =
-                new Post(
+        Post post = new Post(
                         1L,
                         "title",
                         "body",
-                        LocalDateTime.ofEpochSecond(50000, 50000, ZoneOffset.UTC),
-                        LocalDateTime.ofEpochSecond(50000, 50000, ZoneOffset.UTC),
-                        null,
-                        null,
-                        null);
-        when(postDao.existsById(anyLong())).thenReturn(false);
+                        LocalDateTime.now(),
+                        LocalDateTime.now());
+
+        Mockito.lenient().when(postDao.existsById(anyLong())).thenReturn(false);
         when(postDao.save(post)).thenReturn(post);
 
-        Post savedPost = postService.addPost(post).get();
-        assertEquals(post, savedPost);
-    }
-
-    @Test
-    @DisplayName("Should throw an exception when the id is already taken")
-    void addPostWhenIdIsAlreadyTakenThenThrowException() {
-        Post post =
-                new Post(
-                        1L,
-                        "title",
-                        "body",
-                        LocalDateTime.ofEpochSecond(50000, 50000, ZoneOffset.UTC),
-                        LocalDateTime.ofEpochSecond(50000, 50000, ZoneOffset.UTC),
-                        null,
-                        null,
-                        null);
-        when(postDao.existsById(anyLong())).thenReturn(true);
-        assertThrows(EntityExistsException.class, () -> postService.addPost(post));
+        Optional<Post> savedPost = postService.addPost(post);
+        assertEquals(post, savedPost.get());
     }
 
     // TEST UPDATE

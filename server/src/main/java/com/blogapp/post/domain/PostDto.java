@@ -5,7 +5,6 @@ import com.blogapp.comment.domain.Comment;
 import com.blogapp.user.domain.User;
 
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.List;
 
 public class PostDto {
@@ -23,6 +22,8 @@ public class PostDto {
     private List<Comment> comments;
 
     private List<Photo> photos;
+
+    private String username;
 
     private User user;
 
@@ -90,12 +91,22 @@ public class PostDto {
         this.user = user;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public static Post mapPostDtoToPost(PostDto postDto) {
         return new Post(
-                postDto.getId(), postDto.getTitle(), postDto.getBody(),
-                LocalDateTime.ofEpochSecond(50000,50000, ZoneOffset.UTC),
-                LocalDateTime.ofEpochSecond(50000,50000, ZoneOffset.UTC),
-                postDto.getComments(), postDto.getPhotos(), postDto.getUser()
+                postDto.getId(),
+                postDto.getTitle(),
+                postDto.getBody(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                postDto.getUser()
         );
     }
 
