@@ -31,7 +31,7 @@ To Start Backend App:
 
 </br>
 
-| Route | Params | Accepted Method | Response Type |
+| Route | Params | Method | Response Type |
 |:-- | :--: | :--: | --: |
 | /posts | none | GET |  json |
 
@@ -92,9 +92,14 @@ Response Body:
 ]
 ```
 
-| Route | Params | Accepted Method | Response Type |
+</br>
+</br>
+</br>
+</br>
+
+| Route | Params | Method | Response Type |
 |:-- | :--: | :--: | --: |
-| /posts | 1 | GET |  json |
+| /posts | id: 1 | GET |  json |
 
 Response Body:
 
@@ -133,9 +138,14 @@ Response Body:
 }
 ```
 
-| Route | Params | Accepted Method | Response Type |
+</br>
+</br>
+</br>
+</br>
+
+| Route | Params | Method | Response Type |
 |:-- | :--: | :--: | --: |
-| /posts/users/ | 1 | GET |  json |
+| /posts/users/ | id: 1 | GET |  json |
 
 Response Body:
 
@@ -174,9 +184,14 @@ Response Body:
 }
 ```
 
-| Route | Params | Accepted Method | Response Type |
+</br>
+</br>
+</br>
+</br>
+
+| Route | Params | Method | Response Type |
 |:-- | :--: | :--: | --: |
-| /posts | json | POST |  json |
+| /posts | json object | POST |  json |
 
 Request Body:
 
@@ -213,9 +228,14 @@ Response Body:
 }
 ```
 
-| Route | Params | Accepted Method | Response Type |
+</br>
+</br>
+</br>
+</br>
+
+| Route | Params | Method | Response Type |
 |:-- | :--: | :--: | --: |
-| /posts | json | PUT |  json |
+| /posts | json object | PUT |  json |
 
 Request Body:
 
@@ -246,9 +266,14 @@ Response Body:
 }
 ```
 
-| Route | Params | Accepted Method | Response Type |
+</br>
+</br>
+</br>
+</br>
+
+| Route | Params | Method | Response Type |
 |:-- | :--: | :--: | --: |
-| /posts | 1 | DELETE |  json |
+| /posts | id: 1 | DELETE |  json |
 
 Response Body:
 
@@ -268,8 +293,9 @@ Response Body:
 ## Categories Resources
 
 </br>
+</br>
 
-| Route | Params | Accepted Method | Response Type |
+| Route | Params | Method | Response Type |
 |:-- | :--: | :--: | --: |
 | /categories | none | GET |  json |
 
@@ -304,9 +330,14 @@ Response Body:
 ]
 ```
 
-| Route | Param | Accepted Method | Response Type |
+</br>
+</br>
+</br>
+</br>
+
+| Route | Param | Method | Response Type |
 |:-- | :--: | :--: | --: |
-| /categories | 1 | GET |  json |
+| /categories | id: 1 | GET |  json |
 
 Response Body:
 
