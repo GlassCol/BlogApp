@@ -12,6 +12,7 @@ import org.springframework.context.annotation.ComponentScan;
 public class SpringApp {
 
 	public static void main(String[] args) {
+<<<<<<< HEAD
 
 		// THIS CODE DOES NOTHING AND DOES NOT WORK
 
@@ -26,6 +27,13 @@ public class SpringApp {
 
 		DataInitializer dataInitializer = appContext.getBean(DataInitializer.class);
 		dataInitializer.seedDb();
+=======
+		ApplicationContext appContext = SpringApplication.run(SpringApp.class, args);
+		DataInitializer dataInitializer = appContext.getBean(DataInitializer.class);
+		dataInitializer.seedBlogCategories();
+
+
+>>>>>>> 21a2c00a0318e5e79df0178a813e9ad2509d61e6
 
 	}
 

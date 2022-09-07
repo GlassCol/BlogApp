@@ -7,10 +7,14 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
+<<<<<<< HEAD:server/src/main/java/com/blogapp/user/domain/User.java
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users",
     uniqueConstraints = { @UniqueConstraint(name = "users_username_uk", columnNames = {"username"}) })
+=======
+@Table
+>>>>>>> 21a2c00a0318e5e79df0178a813e9ad2509d61e6:server/src/main/java/com/blogapp/domains/User.java
 public class User {
 
 
@@ -32,6 +36,18 @@ public class User {
 
     @Column(name="email")
     private String email;
+
+    public User() {
+    }
+
+    public User(Long id, String username, String firstName, String lastName, String authToken, String email) {
+        this.id = id;
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.authToken = authToken;
+        this.email = email;
+    }
 
     public Long getId() {
         return id;
@@ -73,6 +89,7 @@ public class User {
         this.lastName = lastName;
     }
 
+<<<<<<< HEAD:server/src/main/java/com/blogapp/user/domain/User.java
     public String getEmail() {
         return email;
     }
@@ -80,6 +97,9 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+=======
+
+>>>>>>> 21a2c00a0318e5e79df0178a813e9ad2509d61e6:server/src/main/java/com/blogapp/domains/User.java
 
     @Override
     public String toString() {

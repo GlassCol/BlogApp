@@ -2,8 +2,12 @@
 <!DOCTYPE hibernate-configuration PUBLIC
         "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<<<<<<< HEAD
 <!-- Version 8 MySQL hibernate-cfg.xml example for Hibernate 5 -->
 <!-- this configuration is handled by Spring in application.properties and does not need to exist here -->
+=======
+
+>>>>>>> 21a2c00a0318e5e79df0178a813e9ad2509d61e6
 <hibernate-configuration>
     <session-factory>
         <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
