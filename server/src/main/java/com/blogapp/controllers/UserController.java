@@ -21,8 +21,15 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    User getUserBy(@PathVariable Long theId) {
-        return userService.getUserBy(theId);
+    User getUserById(@PathVariable Long theId) {
+        return userService.getUserById(theId);
     }
-
+    @GetMapping("/users")
+    User getUserByUsername(@PathVariable String userName){
+        return userService.getUserByUsername(userName);
+    }
+    @GetMapping("/users")
+    User getUserByEmail(@PathVariable String email) {
+        return userService.getUserByEmail(email);
+    }
 }

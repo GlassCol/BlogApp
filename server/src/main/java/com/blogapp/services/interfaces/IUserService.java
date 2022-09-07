@@ -4,5 +4,8 @@ import com.blogapp.domains.User;
 
 
 public interface IUserService {
-    User getUserBy(Long theId);
+    User getUserById(Long theId);
+    User getUserByUsername(String username);
+    User getUserByEmail(String email);
+
 }

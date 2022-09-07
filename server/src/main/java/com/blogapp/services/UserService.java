@@ -10,14 +10,30 @@ import org.springframework.stereotype.Service;
 public class UserService implements IUserService {
 
     private final IUserDao userDao;
+    private final static String USER_NOT_FOUND = "user %s not found";
+
 
     @Autowired
     UserService(IUserDao userDao) {
         this.userDao = userDao;
     }
 
+
     @Override
-    public User getUserBy(Long theId) {
+    public User getUserById(Long theId) {
         return userDao.findById(theId).orElse(null);
     }
+
+    @Override
+    public User getUserByUsername(String username) {
+        return userDao.getUserByUsername(username);
+        //code for if there is an error
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return userDao.getUserByEmail(email);
+        //code for if there is an error
+    }
+
 }

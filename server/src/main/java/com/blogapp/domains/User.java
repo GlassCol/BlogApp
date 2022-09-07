@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
+@Table
 public class User {
 
     @Id
@@ -25,6 +26,18 @@ public class User {
 
     @Column(name="email")
     private String email;
+
+    public User() {
+    }
+
+    public User(Long id, String username, String firstName, String lastName, String authToken, String email) {
+        this.id = id;
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.authToken = authToken;
+        this.email = email;
+    }
 
     public Long getId() {
         return id;
@@ -65,6 +78,8 @@ public class User {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+
 
     @Override
     public String toString() {
