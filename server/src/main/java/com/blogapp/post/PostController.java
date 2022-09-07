@@ -109,7 +109,7 @@ public class PostController {
     @PostMapping(path = {"", "/"})
     public ResponseEntity<Object> addPost(@RequestBody PostDto postDto) {
         // check if user is authorized to create a post
-        Optional<User> user = userService.getUserByUsername(postDto.getUsername());
+        Optional<User> user = userService.findByUsername(postDto.getUsername());
 
         // when user is found, then proceed to create a post
         if (user.isPresent()) {
@@ -151,7 +151,7 @@ public class PostController {
     @PutMapping(path = {"", "/"})
     public ResponseEntity<Object> updatePost(@RequestBody PostDto postDto) {
         // check if user is authorized to update the post
-        Optional<User> user = userService.getUserByUsername(postDto.getUsername());
+        Optional<User> user = userService.findByUsername(postDto.getUsername());
         // check if the user is the owner of the post
         Optional<Post> existingPost = postService.getPostById(postDto.getId());
 

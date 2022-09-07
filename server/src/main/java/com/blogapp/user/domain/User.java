@@ -1,14 +1,8 @@
 package com.blogapp.user.domain;
 
-
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "users",
     uniqueConstraints = { @UniqueConstraint(name = "users_username_uk", columnNames = {"username"}) })
 public class User {
