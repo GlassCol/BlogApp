@@ -29,4 +29,9 @@ public class PhotoService implements IPhotoService {
         return Optional.of(photoDao.save(photo));
     }
 
+    @Override
+    public List<Photo> getPhotoByIdPost(Long thePostId) {
+        return photoDao.findByPostId(thePostId);
+    }
+
 }

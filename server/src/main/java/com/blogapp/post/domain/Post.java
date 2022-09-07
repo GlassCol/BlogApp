@@ -71,11 +71,11 @@ public class Post {
     @ToString.Exclude
     private List<Photo> photos;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "users_id", nullable = true)
-    @ToString.Exclude
     @JsonIncludeProperties(value = {"id", "username"})
     @CreatedBy
+    @ToString.Exclude
     private User user;
 
 }

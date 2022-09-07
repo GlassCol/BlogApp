@@ -40,31 +40,45 @@ public class PostController {
     }
 
     @GetMapping(path = {"", "/"})
+    @ResponseBody
     public ResponseEntity<Object> getPosts() {
         List<Post> posts = postService.getPosts();
 
         if (posts.isEmpty()) {
             log.info(new EntityNotFoundException().getMessage());
-            return ResponseHandler.response(null, HttpStatus.NO_CONTENT);
+            return ResponseHandler.response(posts, HttpStatus.NO_CONTENT, "No posts found");
         }
         return ResponseHandler.response(posts, HttpStatus.OK);
     }
 
     // determine whether to use username or id
     @GetMapping(path = "/users/{theUserId}")
+    @ResponseBody
     public ResponseEntity<Object> getPostByUserId(@PathVariable Long theUserId) {
         List<Post> posts = postService.getPostsByUserId(theUserId);
 
         if (posts.isEmpty()) {
             log.info(new EntityNotFoundException().getMessage());
-            return ResponseHandler.response(null,
-                    HttpStatus.NOT_FOUND,
+            return ResponseHandler.response(posts, HttpStatus.NOT_FOUND,
                     "No posts found for user "+theUserId);
         }
         return ResponseHandler.response(posts, HttpStatus.OK);
     }
 
+    @GetMapping(path = "/{thePostId}/photos")
+    @ResponseBody
+    public ResponseEntity<Object> getPostPhotoById(@PathVariable Long thePostId) {
+        List<Photo> photos = photoService.getPhotoByIdPost(thePostId);
+
+        if (photos.isEmpty()) {
+            log.info(new EntityNotFoundException().getMessage());
+            return ResponseHandler.response(photos, HttpStatus.NO_CONTENT, "No content found");
+        }
+        return ResponseHandler.response(photos, HttpStatus.OK);
+    }
+
     @GetMapping(path = "/photos")
+    @ResponseBody
     public ResponseEntity<Object> getPostPhotos() {
         List<Photo> photos = photoService.getPhotos();
 
@@ -92,6 +106,7 @@ public class PostController {
     }
 
     @GetMapping(path = "/{theId}")
+    @ResponseBody
     public ResponseEntity<Object> getPostsById(@PathVariable Long theId)  {
         Optional<Post> post = postService.getPostById(theId);
 
@@ -107,6 +122,7 @@ public class PostController {
 
     @CrossOrigin(origins = "*")
     @PostMapping(path = {"", "/"})
+    @ResponseBody
     public ResponseEntity<Object> addPost(@RequestBody PostDto postDto) {
         // check if user is authorized to create a post
         Optional<User> user = userService.findByUsername(postDto.getUsername());
@@ -149,6 +165,7 @@ public class PostController {
 
     @CrossOrigin(origins = "*")
     @PutMapping(path = {"", "/"})
+    @ResponseBody
     public ResponseEntity<Object> updatePost(@RequestBody PostDto postDto) {
         // check if user is authorized to update the post
         Optional<User> user = userService.findByUsername(postDto.getUsername());
@@ -188,6 +205,7 @@ public class PostController {
     }
 
     @DeleteMapping(path = {"", "/{theId}"})
+    @ResponseBody
     public ResponseEntity<Object> deletePostById(@PathVariable Long theId) {
 
         if ( postService.deletePostById(theId) ) {

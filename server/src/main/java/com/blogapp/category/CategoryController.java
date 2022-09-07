@@ -30,6 +30,7 @@ public class CategoryController {
     }
 
     @GetMapping({"", "/"})
+    @ResponseBody
     public ResponseEntity<Object> getCategories() {
         List<Category> categories = categoryService.getCategories();
 
@@ -40,6 +41,7 @@ public class CategoryController {
     }
 
     @GetMapping("/trending")
+    @ResponseBody
     public ResponseEntity<Object> getTrending() {
         List<Category> trending = categoryService.getTrendingCategories();
 
@@ -50,6 +52,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{theId}")
+    @ResponseBody
     public  ResponseEntity<Object> getCategoryById(@PathVariable("theId") Long theId) {
         Optional<Category> category = categoryService.getCategoryById(theId);
 
@@ -60,6 +63,7 @@ public class CategoryController {
     }
 
     @PostMapping(path = {"/"}, consumes = {APPLICATION_JSON_VALUE})
+    @ResponseBody
     public ResponseEntity<Object> addCategory(@RequestBody CategoryDTO categoryDTO) {
 
         Category category = applicationContext.getBean(Category.class);
@@ -77,6 +81,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{theId}")
+    @ResponseBody
     public ResponseEntity<Object> deleteCategoryById(@PathVariable Long theId) {
 
         if (categoryService.deleteCategoryById(theId)) {

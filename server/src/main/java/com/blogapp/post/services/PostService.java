@@ -5,7 +5,6 @@ import com.blogapp.post.repositories.IPostDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,11 +25,7 @@ public class PostService implements IPostService {
 
     @Override
     public List<Post> getPostsByUserId(Long theId) {
-        List<Post> posts = postDao.findByUserId(theId);
-        if (posts.isEmpty()) {
-            throw new EntityNotFoundException();
-        }
-        return posts;
+        return postDao.findByUserId(theId);
     }
 
     @Override
@@ -40,7 +35,6 @@ public class PostService implements IPostService {
 
     @Override
     public Optional<Post> addPost(Post post) {
-
         return Optional.of(postDao.save(post));
     }
 
@@ -50,7 +44,7 @@ public class PostService implements IPostService {
             Post updatedPost = postDao.save(post);
             return Optional.of(updatedPost);
         }
-        throw new EntityNotFoundException();
+        return Optional.empty();
     }
 
     @Override
@@ -61,4 +55,5 @@ public class PostService implements IPostService {
         }
         return false;
     }
+
 }

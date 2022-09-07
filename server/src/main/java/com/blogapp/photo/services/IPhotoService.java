@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface IPhotoService {
     List<Photo> getPhotos();
     Optional<Photo> addPhoto(Photo photo);
+    List<Photo> getPhotoByIdPost(Long thePostId);
 }
