@@ -126,7 +126,6 @@ public class PostController {
                 return ResponseHandler.response(null, HttpStatus.INTERNAL_SERVER_ERROR);
             }
 
-
             // after the post has been saved, then proceed to save photo(s)
             // create a photo object from dto object && save the photo object to get the object with an id
             Photo photo = PhotoDTO.mapPostDtoToPhoto(postDto);
