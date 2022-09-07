@@ -19,21 +19,4 @@ public class UserService implements IUserService {
     }
 
 
-    @Override
-    public User getUserById(Long theId) {
-        return userDao.findById(theId).orElse(null);
-    }
-
-    @Override
-    public User getUserByUsername(String username) {
-        return userDao.getUserByUsername(username);
-        //code for if there is an error
-    }
-
-    @Override
-    public User getUserByEmail(String email) {
-        return userDao.getUserByEmail(email);
-        //code for if there is an error
-    }
-
 }
