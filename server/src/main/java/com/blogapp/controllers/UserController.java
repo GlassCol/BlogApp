@@ -25,6 +25,7 @@ public class UserController {
         this.userDao = userDao;
     }
 
+    @GetMapping
     public List<User> getUsers() {
         return userDao.findAll();
     }
@@ -32,14 +33,6 @@ public class UserController {
     @GetMapping("/users")
     User getUserById(@PathVariable Long theId) {
         return userDao.findById(theId).orElseThrow(RuntimeException::new);
-    }
-    @GetMapping("/users")
-    User getUserByUsername(@PathVariable String userName){
-        return userDao.getUserByUsername(userName);
-    }
-    @GetMapping("/users")
-    User getUserByEmail(@PathVariable String email) {
-        return userDao.getUserByEmail(email);
     }
 
     @PostMapping
