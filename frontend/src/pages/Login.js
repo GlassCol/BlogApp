@@ -1,15 +1,17 @@
-import React from 'react'
+import React, {useState } from 'react'
 import Container from 'react-bootstrap/Container'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import blogIcon from "./blogger.png";
 import { useNavigate } from 'react-router-dom';
 
-const [usernameReg, setUsernameReg] = useState("")
-const [passwordReg, setPasswordReg] = useState("")
+// const [usernameReg, setUsernameReg] = useState("")
+// const [passwordReg, setPasswordReg] = useState("")
 
 
 const Login = () => {
+  const [usernameReg, setUsernameReg] = useState("")
+  const [passwordReg, setPasswordReg] = useState("")
   const navigate = useNavigate();
 
   const handleSumbit = () =>{
@@ -17,22 +19,12 @@ const Login = () => {
   };
 
   return (
-<<<<<<< HEAD:frontend/src/pages/Login.js
-    <Container className="d-grid h-100 ">
-      <Form className="text-center w-100 ps-5 pe-5 mb-5">
-        <img className="login Logo-img p-3" 
-            src={blogIcon} 
-            width="80" 
-            height="90" 
-            alt="Login Logo" />
-        <h1 className="mb-3 fs-3 fw-normal">
-          Please sign in
-        </h1>
-        <Form.Group className="mb-1" controlId="signInUsername-id">
-          <Form.Control type="text" placeholder="Username" autoComplete="username" className="position-relative" />
-=======
     <Container className="d-grid h-100">
       <Form className="text-center w-100">
+      <img className="login Logo-img p-3" 
+            src={blogIcon} alt="blog-icon"
+            width="200"
+            height="200" />
         <h1 className="mb-3 fs-3 fw-normal">
           Please sign in
         </h1>
@@ -41,7 +33,6 @@ const Login = () => {
           <Form.Control type="text" placeholder="Username" autoComplete="username" className="position-relative" onChange={(e) => {
             setUsernameReg(e.target.value)
           }}/>
->>>>>>> 21a2c00a0318e5e79df0178a813e9ad2509d61e6:frontend/src/components/panels/login/Login.js
         </Form.Group>
         <Form.Group className="mb-1"
         controlId="signInPassword-id">

@@ -28,8 +28,6 @@ public class UserController {
         return userService.findAll();
     }
 
-    // todo - remove the users prefix, since it was defined in @RequestMapping, otherwise route would be users/users/{theId}
-    // todo - fix url to be specific, i.e. /id/{email}, otherwise ambiguous mapping error since there are multiple get routes
     @GetMapping("/users/{theId}")
     User getUserById(@PathVariable Long theId) {
         return userService.findById(theId).orElse(null);
@@ -47,7 +45,6 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    // todo - fix url to be specific, i.e. /email/{email}, otherwise ambiguous mapping error since there are multiple get routes
     @GetMapping("/{email}")
     User getUserByEmail(@PathVariable String email) {
         return userService.findByEmail(email);
