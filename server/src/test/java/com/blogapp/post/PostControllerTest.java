@@ -1,261 +1,99 @@
 package com.blogapp.post;
 
-import com.blogapp.photo.domain.Photo;
-import com.blogapp.photo.domain.PhotoDTO;
-import com.blogapp.photo.services.IPhotoService;
 import com.blogapp.post.domain.Post;
-import com.blogapp.post.domain.PostDto;
 import com.blogapp.post.services.IPostService;
+import com.blogapp.user.domain.User;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.json.JacksonTester;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("PostController tests")
 class PostControllerTest {
 
-    @Mock
-    private IPostService postService;
+    @Autowired
+    private MockMvc mockMvc;
 
     @Mock
-    private IPhotoService photoService;
+    private IPostService postService;
 
     @InjectMocks
     private PostController postController;
 
-    // TEST GETS POSTS BY THE CATEGORY ID
+    @BeforeEach
+    public void setup() {
 
-    // TEST GET POSTS ALL
-    @Test
-    @DisplayName("Should return a list of posts when there are posts in the database")
-    void getPostsWhenThereArePostsInTheDatabase() {
-        Post post = new Post();
-        post.setId(1L);
-        post.setTitle("Test title");
-        post.setBody("Test body");
-
-        when(postService.getPosts()).thenReturn(List.of(post));
-
-        ResponseEntity<Object> response = postController.getPosts();
-
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertNotNull(response.getBody());
+        // Here we can't use @AutoConfigureJsonTesters because there isn't a Spring context
+//        JacksonTester.initFields(this, new ObjectMapper());
+        // MockMvc standalone approach
+        mockMvc = MockMvcBuilders.standaloneSetup(postController).build();
     }
 
-    @Test
-    @DisplayName("Should return an empty list when there are no posts in the database")
-    void getPostsWhenThereAreNoPostsInTheDatabase() {
-        when(postService.getPosts()).thenReturn(List.of());
-
-        ResponseEntity<Object> response = postController.getPosts();
-
-        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
-        assertNotNull(response.getBody());
-    }
-
-    // TEST GET POST BY USER / POSTER ID
-    @Test
-    @DisplayName("Should return a list of posts when the user id is valid")
-    void getPostByUserIdWhenUserIdIsValidThenReturnListOfPosts() {
-        Long userId = 1L;
-        Post post = new Post();
-        post.setId(1L);
-        post.setTitle("title");
-        post.setBody("body");
-        when(postService.getPostsByUserId(userId)).thenReturn(List.of(post));
-
-        ResponseEntity<Object> response = postController.getPostByUserId(userId);
-
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertNotNull(response.getBody());
-    }
+    // POST ALL
 
     @Test
-    @DisplayName("Should return an empty list when the user id is invalid")
-    void getPostByUserIdWhenUserIdIsInvalidThenReturnEmptyList() {
-        Long userId = 1L;
-        when(postService.getPostsByUserId(userId)).thenReturn(List.of());
+    @DisplayName("Should return all posts")
+    void getPostsShouldReturnAllPosts() throws Exception {
+        User user1 = new User(10L, "Alice-1", "Last-1", "Alice", "",  "Alice1@example.com");
+        User user2 = new User(20L, "Alice-2", "Last-2", "Alice", "",  "Alice2@example.com");
 
-        ResponseEntity<Object> response = postController.getPostByUserId(userId);
+        List<Post> posts = List.of(
+                new Post(1L, "TITLE-1", "BODY-1", LocalDateTime.now(), LocalDateTime.now(), user1 ),
+                new Post(2L, "TITLE-2", "BODY-2", LocalDateTime.now(), LocalDateTime.now(), user2)
+        );
 
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-        assertNotNull(response.getBody());
+        given(postService.getPosts()).willReturn(new ResponseEntity<>(posts, HttpStatus.OK));
+
+        MockHttpServletResponse response = mockMvc.perform(
+                        get("/posts")
+                            .accept(MediaType.APPLICATION_JSON))
+                            .andReturn().getResponse();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+
     }
 
-    // TEST GET PHOTOS
-    @Test
-    @DisplayName("Should return a list of photos when there are photos in the database")
-    void getPostPhotosWhenThereArePhotosInTheDatabaseThenReturnListOfPhotos() {
-        List<Photo> photos = List.of(new Photo());
+    // POST BY POST ID
 
-        when(photoService.getPhotos()).thenReturn(photos);
-        ResponseEntity<Object> response = postController.getPostPhotos();
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertNotNull(response.getBody());
-    }
+    // POST BY USER ID
 
-    @Test
-    @DisplayName("Should return an empty list when there are no photos in the database")
-    void getPostPhotosWhenThereAreNoPhotosInTheDatabaseThenReturnEmptyList() {
-        when(photoService.getPhotos()).thenReturn(List.of());
+    // POST BY USERNAME
 
-        ResponseEntity<Object> response = postController.getPostPhotos();
+    // PHOTO BY POST ID
 
-        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
-        assertNotNull(response.getBody());
-    }
-
-    // TEST GET POST BY THE POST ID
-    @Test
-    @DisplayName("Should return a post when the id is valid")
-    void getPostsByIdWhenIdIsValid() {
-        Post post = new Post();
-        post.setId(1L);
-        post.setTitle("title");
-        post.setBody("body");
-
-        when(postService.getPostById(any())).thenReturn(Optional.of(post));
-
-        ResponseEntity<Object> response = postController.getPostsById(1L);
-
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertNotNull(response.getBody());
-    }
-
-    @Test
-    @DisplayName("Should return null when the id is invalid")
-    void getPostsByIdWhenIdIsInvalid() {
-        when(postService.getPostById(any())).thenReturn(null);
-        ResponseEntity<Object> response = postController.getPostsById(1L);
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-    }
-
-    // TEST ADD POST
-
-    @Test
-    @DisplayName("Should return a 201 status code when the post is successfully created")
-    void addPostWhenPostIsSuccessfullyCreatedThenReturn201() {
-        PostDto postDto = new PostDto();
-        postDto.setId(1L);
-        postDto.setTitle("title");
-        postDto.setBody("body");
-        postDto.setUsername("username");
-
-        Post post = PostDto.mapPostDtoToPost(postDto);
-        Photo photo = PhotoDTO.mapPostDtoToPhoto(postDto);
-
-        when(postService.addPost(any())).thenReturn(Optional.of(post));
-        when(photoService.addPhoto(any())).thenReturn(Optional.of(photo));
-
-        ResponseEntity<Object> response = postController.addPost(postDto);
-
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
-    }
-
-    @Test
-    @DisplayName("Should return a 403 status code when the user is not authorized")
-    void addPostWhenUserIsNotAuthorizedThenReturn403() {
-        PostDto postDto = new PostDto();
-        postDto.setUsername("test");
-
-        when(postService.addPost(any(Post.class))).thenReturn(Optional.empty());
-
-        ResponseEntity<Object> response = postController.addPost(postDto);
-
-        assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
-    }
-
-    @Test
-    @DisplayName("Should return a 409 status code when the user is not found")
-    void addPostWhenUserIsNotFoundThenReturn409() {
-        PostDto postDto = new PostDto();
-        postDto.setUsername("username");
-
-        when(postService.addPost(any(Post.class))).thenReturn(Optional.empty());
-
-        ResponseEntity<Object> response = postController.addPost(postDto);
-
-        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
-    }
-
-
-
+    // ADD POST
 
     // TEST UPDATE POST
-    @Test
-    @DisplayName("Should return the updated post when the post exists")
-    void updatePostWhenPostExistsThenReturnUpdatedPost() {
-        PostDto postDto = new PostDto();
-        postDto.setId(1L);
-        postDto.setTitle("title");
-        postDto.setBody("body");
-
-        Post post = new Post();
-        post.setId(1L);
-        post.setTitle("title");
-        post.setBody("body");
-
-        when(postService.updatePost(any(Post.class))).thenReturn(Optional.of(post));
-
-        ResponseEntity<Object> response = postController.updatePost(postDto);
-
-        assertNotNull(response);
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-    }
-
-    @Test
-    @DisplayName("Should return null when the post does not exist")
-    void updatePostWhenPostDoesNotExistThenReturnNull() {
-        PostDto postDto = new PostDto();
-        postDto.setId(1L);
-        postDto.setTitle("title");
-        postDto.setBody("body");
-
-        when(postService.updatePost(any(Post.class))).thenReturn(Optional.empty());
-
-        ResponseEntity<Object> response = postController.updatePost(postDto);
-
-        assertNotNull(response);
-        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
-    }
 
     // TEST DELETE POST
-    @Test
-    @DisplayName("Should return true when the post is deleted")
-    void deletePostByIdWhenPostIsDeletedThenReturnTrue() {
-        Long id = 1L;
-        when(postService.deletePostById(id)).thenReturn(true);
 
-        ResponseEntity<Object> response = postController.deletePostById(id);
-
-        assertNotNull(response);
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertNotNull(response.getBody());
-    }
-
-    @Test
-    @DisplayName("Should return false when the post is not deleted")
-    void deletePostByIdWhenPostIsNotDeletedThenReturnFalse() {
-        Long id = 1L;
-        when(postService.deletePostById(id)).thenReturn(false);
-
-        ResponseEntity<Object> response = postController.deletePostById(id);
-
-        assertNotNull(response);
-        assertEquals(HttpStatus.NOT_MODIFIED, response.getStatusCode());
-        assertNotNull(response.getBody());
-    }
 }

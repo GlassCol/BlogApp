@@ -28,7 +28,8 @@ public class UserController {
         return userService.findAll();
     }
 
-    @GetMapping("/users/{theId}")
+    @GetMapping("/id/{theId}")
+    @ResponseBody
     User getUserById(@PathVariable Long theId) {
         return userService.findById(theId).orElse(null);
     }
@@ -45,7 +46,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/{email}")
+    @GetMapping("/email/{email}")
     User getUserByEmail(@PathVariable String email) {
         return userService.findByEmail(email);
     }

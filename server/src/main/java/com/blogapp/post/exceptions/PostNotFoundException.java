@@ -1,4 +1,4 @@
-package com.blogapp.post;
+package com.blogapp.post.exceptions;
 
 
 public class PostNotFoundException extends RuntimeException {

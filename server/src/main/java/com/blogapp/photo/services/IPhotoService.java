@@ -1,12 +1,13 @@
 package com.blogapp.photo.services;
 
 import com.blogapp.photo.domain.Photo;
+import com.blogapp.post.domain.Post;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface IPhotoService {
     List<Photo> getPhotos();
-    Optional<Photo> addPhoto(Photo photo);
-    List<Photo> getPhotoByIdPost(Long thePostId);
+    List<Photo> getPhotoByPostId(Long thePostId);
+
+    List<Photo> addPhotosToPost(List<Photo> photos, Post post);
 }

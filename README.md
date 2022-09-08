@@ -99,7 +99,7 @@ Response Body:
 
 | Route | Params | Method | Response Type |
 |:-- | :--: | :--: | --: |
-| /posts | id: 1 | GET |  json |
+| /posts/id/ | 1 | GET |  json |
 
 Response Body:
 
@@ -145,7 +145,80 @@ Response Body:
 
 | Route | Params | Method | Response Type |
 |:-- | :--: | :--: | --: |
-| /posts/users/ | id: 1 | GET |  json |
+| /posts/id/photos | 2 | GET |  json |
+
+Response Body:
+
+```
+[
+    {
+        "id": 2,
+        "imageUrl": "https://picsum.photos/id/6/200/300",
+        "title": "eum",
+        "imageType": "post",
+        "createdAt": "2022-09-08 16:40:01",
+        "updatedAt": "2022-09-08 16:40:01",
+        "post": {
+            "id": 2
+        }
+    }
+],
+```
+
+</br>
+</br>
+</br>
+</br>
+
+| Route | Params | Method | Response Type |
+|:-- | :--: | :--: | --: |
+| /posts/users/id | 1 | GET |  json |
+
+Response Body:
+
+```
+{
+    id: 1,
+    title: "nesciunt",
+    body: " nesciunt quas odio eum et est occaecr",
+    updatedAt: "2022-09-06 10:14:38",
+    createdAt: "2022-09-06 10:14:37",
+    comments: [
+        {
+            id: 1,
+            body: "nesciquas odio",
+            parent: true,
+            updatedAt: "2022-09-06 10:14:37",
+            createdAt: "2022-09-06 10:14:37",
+            post: 1
+        },
+    ],
+    photos: [
+        {
+            id: 1,
+            imageUrl: "https://picsum.photos/id/695/200/300",
+            title: "nesciunt",
+            imageType: "post",
+            createdAt: "2022-09-06 10:14:37",
+            updatedAt: "2022-09-06 10:14:37",
+            post: 1
+        }
+    ],
+    user: {
+        id: 1,
+        username: "Leane"
+    }
+}
+```
+
+</br>
+</br>
+</br>
+</br>
+
+| Route | Params | Method | Response Type |
+|:-- | :--: | :--: | --: |
+| /posts/users/username/ | 1 | GET |  json |
 
 Response Body:
 
@@ -289,6 +362,57 @@ Response Body:
 </br>
 </br>
 </br>
+
+## Photo Resources
+
+</br>
+</br>
+</br>
+</br>
+
+| Route | Params | Method | Response Type |
+|:-- | :--: | :--: | --: |
+| /photos | none | GET |  json |
+
+Response Body:
+
+```
+[
+        {
+            "id": 3,
+            "imageUrl": "https://picsum.photos/id/11/200/300",
+            "title": "et est occaecati",
+            "imageType": "post",
+            "createdAt": "2022-09-08 16:40:02",
+            "updatedAt": "2022-09-08 16:40:02",
+            "post": {
+                "id": 3
+            }
+        },
+        {
+            "id": 4,
+            "imageUrl": "https://picsum.photos/id/16/200/300",
+            "title": "qui est esse",
+            "imageType": "post",
+            "createdAt": "2022-09-08 16:40:02",
+            "updatedAt": "2022-09-08 16:40:02",
+            "post": {
+                "id": 4
+            }
+        },
+        {
+            "id": 5,
+            "imageUrl": "https://picsum.photos/id/21/200/300",
+            "title": "magnam facilis autem",
+            "imageType": "post",
+            "createdAt": "2022-09-08 16:40:02",
+            "updatedAt": "2022-09-08 16:40:02",
+            "post": {
+                "id": 5
+            }
+        },
+    ],
+```
 
 ## Categories Resources
 

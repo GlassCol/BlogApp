@@ -7,7 +7,21 @@ import com.blogapp.user.domain.User;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class PostDto {
+public class PostDTO {
+
+    public PostDTO() {}
+
+    public PostDTO(Long id, String title, String body, LocalDateTime updatedAt, LocalDateTime createdAt, List<Comment> comments, List<Photo> photos, String username, User user) {
+        this.id = id;
+        this.title = title;
+        this.body = body;
+        this.updatedAt = updatedAt;
+        this.createdAt = createdAt;
+        this.comments = comments;
+        this.photos = photos;
+        this.username = username;
+        this.user = user;
+    }
 
     private Long id;
 
@@ -99,7 +113,7 @@ public class PostDto {
         this.username = username;
     }
 
-    public static Post mapPostDtoToPost(PostDto postDto) {
+    public static Post mapPostDtoToPost(PostDTO postDto) {
         return new Post(
                 postDto.getId(),
                 postDto.getTitle(),

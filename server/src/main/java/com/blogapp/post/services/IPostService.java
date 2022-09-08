@@ -1,22 +1,24 @@
 package com.blogapp.post.services;
 
-import com.blogapp.post.domain.Post;
-
-import java.util.List;
-import java.util.Optional;
+import com.blogapp.post.domain.PostDTO;
+import org.springframework.http.ResponseEntity;
 
 public interface IPostService {
 
-    List<Post> getPosts();
+    ResponseEntity<Object> getPosts();
 
-    List<Post> getPostsByUserId(Long theId);
+    ResponseEntity<Object> getPostsByUserId(Long theUserId);
 
-    Optional<Post> getPostById(Long theId);
+    ResponseEntity<Object> getPostsByUsername(String theUsername);
 
-    Optional<Post> addPost(Post post);
+    ResponseEntity<Object> getPostById(Long thePostId);
 
-    Optional<Post> updatePost(Post post);
+    ResponseEntity<Object> getPhotoByPostId(Long thePostId);
 
-    boolean deletePostById(Long theId);
+    ResponseEntity<Object> addPost(PostDTO postDto);
+
+    ResponseEntity<Object> updatePost(PostDTO postDto);
+
+    ResponseEntity<Object> deletePostById(Long thePostId);
 
 }

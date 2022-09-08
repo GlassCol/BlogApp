@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class DataInitializer {
@@ -29,6 +30,7 @@ public class DataInitializer {
     private final ICommentDao commentDao;
     private final IPhotoDao photoDao;
     private final AppContextUtil appContextUtil;
+    private int photoCounter = 1;
 
     @Autowired
     public DataInitializer(ICategoryDao categoryDao,
@@ -149,8 +151,10 @@ public class DataInitializer {
 
         Photo photo = appContextUtil.getAppContext().getBean(Photo.class);
 //        int imgNum = (int) (Math.random() * 1000);
-        photo.setImageUrl("https://picsum.photos/id/"+imageNums[(int) (Math.random() * imageNums.length) ]+"/200/300");
+//        photo.setImageUrl("https://picsum.photos/id/"+imageNums[(int) (Math.random() * imageNums.length) ]+"/200/300");
+        photo.setImageUrl("https://picsum.photos/id/"+photoCounter +"/200/300");
         photo.setTitle(titles[index]);
+        photoCounter = photoCounter + 5;
         return photo;
     }
 
@@ -166,7 +170,8 @@ public class DataInitializer {
             User user = createUser(i);
 
             // save the user
-            userDao.save(user);
+//            User savedUser = userDao.save(user);
+//            Optional<User> foundUser = userDao.findById(savedUser.getId());
 
             // set objects to the post object
             post.setUser(user);
@@ -182,9 +187,9 @@ public class DataInitializer {
 
             List<Comment> comments = new ArrayList<>();
             Comment commentA = createComment(i);
-            Comment commentB = createComment(i+1);
-            Comment commentC = createComment(i+2);
-            Comment commentD = createComment(i+3);
+            Comment commentB = createComment(i + 1);
+            Comment commentC = createComment(i + 2);
+            Comment commentD = createComment(i + 3);
             commentA.setPost(post);
             commentB.setPost(post);
             commentC.setPost(post);
@@ -218,6 +223,9 @@ public class DataInitializer {
 
             // save / update the post
             postDao.save(post);
+
+            // save the user
+            userDao.save(user);
 
         }
     }

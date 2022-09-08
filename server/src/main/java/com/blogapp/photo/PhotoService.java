@@ -3,11 +3,11 @@ package com.blogapp.photo;
 import com.blogapp.photo.domain.Photo;
 import com.blogapp.photo.repositories.IPhotoDao;
 import com.blogapp.photo.services.IPhotoService;
+import com.blogapp.post.domain.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PhotoService implements IPhotoService {
@@ -25,12 +25,17 @@ public class PhotoService implements IPhotoService {
     }
 
     @Override
-    public Optional<Photo> addPhoto(Photo photo) {
-        return Optional.of(photoDao.save(photo));
+    public List<Photo> addPhotosToPost(List<Photo> photos, Post post) {
+        // add the post object to the photo object
+        photos.forEach(photo -> photo.setPost(post));
+
+        // persist the photo objects and return the photo record having the photo id
+        return photos.stream().map(photoDao::save).toList();
+
     }
 
     @Override
-    public List<Photo> getPhotoByIdPost(Long thePostId) {
+    public List<Photo> getPhotoByPostId(Long thePostId) {
         return photoDao.findByPostId(thePostId);
     }
 

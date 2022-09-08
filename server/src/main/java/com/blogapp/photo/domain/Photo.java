@@ -16,7 +16,9 @@ import java.time.LocalDateTime;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "photos")
+@Table(name = "photos"
+//        uniqueConstraints = @UniqueConstraint(name = "image_url_uk", columnNames = {"image_url"})
+)
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Photo {
 
@@ -45,10 +47,10 @@ public class Photo {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updatedAt;
 
-
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "post_id")
     @JsonIncludeProperties(value = {"id"})
+    @ToString.Exclude
     private Post post;
 
     public Photo(String imageUrl, String title, String imageType, LocalDateTime now, LocalDateTime now1) {

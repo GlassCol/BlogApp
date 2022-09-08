@@ -1,7 +1,7 @@
 import { useApiResources } from "../../utils/useApiResources"
 
 export const Banner = () => {
-    const [photos, loading] = useApiResources("posts/photos")
+    const [photos, loading] = useApiResources("photos")
     // console.log(photos);
 
     return (

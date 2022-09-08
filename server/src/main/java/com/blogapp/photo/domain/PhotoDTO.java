@@ -1,7 +1,7 @@
 package com.blogapp.photo.domain;
 
 import com.blogapp.post.domain.Post;
-import com.blogapp.post.domain.PostDto;
+import com.blogapp.post.domain.PostDTO;
 
 import java.time.LocalDateTime;
 
@@ -71,8 +71,7 @@ public class PhotoDTO {
         this.post = post;
     }
 
-    public static Photo mapPostDtoToPhoto(PostDto postDto) {
-        Photo photo = postDto.getPhotos().get(0);
+    public static Photo mapPostDtoToPhoto(Photo photo) {
         return new Photo(
                 photo.getImageUrl(),
                 photo.getTitle(),

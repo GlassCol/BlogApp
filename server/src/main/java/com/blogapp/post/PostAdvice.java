@@ -1,5 +1,6 @@
 package com.blogapp.post;
 
+import com.blogapp.post.exceptions.PostNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
