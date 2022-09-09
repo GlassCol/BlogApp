@@ -12,6 +12,7 @@ function Header() {
       <Nav className="me-auto">
         <Nav.Link href="/" className='active'> Home </Nav.Link>
         <Nav.Link href='/Login'  className='active'> Sign In </Nav.Link>
+        <Nav.Link href='/CreateAnAccount' className='active'> Create Account </Nav.Link>
       </Nav>
     </Container>
   </Navbar>
